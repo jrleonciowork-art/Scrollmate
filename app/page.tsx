@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useRef, useState, type PointerEvent } from "react";
 
 const brands = [
   {
@@ -21,8 +24,6 @@ const brands = [
 const packages = [
   {
     name: "The Optimizer",
-    price: "₱5,000",
-    note: "per month",
     description: "For brands that need a stronger, more consistent social presence.",
     features: [
       "Profile uplift & SEO",
@@ -34,8 +35,6 @@ const packages = [
   },
   {
     name: "The Creator",
-    price: "₱10,000",
-    note: "per month",
     description: "For brands ready to turn strategy into thumb-stopping content.",
     features: [
       "Everything in The Optimizer",
@@ -47,8 +46,6 @@ const packages = [
   },
   {
     name: "The Accelerator",
-    price: "₱15,000",
-    note: "per month + campaign fees",
     description: "For growing brands ready to pair organic content with paid scale.",
     features: [
       "Everything in The Creator",
@@ -66,7 +63,46 @@ const steps = [
   { number: "04", name: "Optimize", copy: "We learn from the numbers and sharpen what works.", image: "/process-optimize.webp" },
 ];
 
+const pulseItems = [
+  { day: "MON", title: "Brand story", className: "post-one" },
+  { day: "WED", title: "Reel edit", className: "post-two", icon: "▶" },
+  { day: "FRI", title: "Promo drop", className: "post-three" },
+];
+
 export default function Home() {
+  const visualRef = useRef<HTMLDivElement>(null);
+  const [activePulse, setActivePulse] = useState(0);
+
+  const handleVisualMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "touch") return;
+
+    const visual = visualRef.current;
+    if (!visual) return;
+
+    const bounds = visual.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+
+    visual.style.setProperty("--move-x", `${x * 14}px`);
+    visual.style.setProperty("--move-y", `${y * 10}px`);
+    visual.style.setProperty("--stat-x", `${x * -20}px`);
+    visual.style.setProperty("--stat-y", `${y * -16}px`);
+    visual.style.setProperty("--tilt-x", `${x * 4}deg`);
+    visual.style.setProperty("--tilt-y", `${y * -4}deg`);
+  };
+
+  const resetVisual = () => {
+    const visual = visualRef.current;
+    if (!visual) return;
+
+    visual.style.setProperty("--move-x", "0px");
+    visual.style.setProperty("--move-y", "0px");
+    visual.style.setProperty("--stat-x", "0px");
+    visual.style.setProperty("--stat-y", "0px");
+    visual.style.setProperty("--tilt-x", "0deg");
+    visual.style.setProperty("--tilt-y", "0deg");
+  };
+
   return (
     <main>
       <header className="site-header">
@@ -84,7 +120,6 @@ export default function Home() {
             <a href="#about">About</a>
             <a href="#brands">Brands</a>
             <a href="#packages">Packages</a>
-            <a className="nav-cta" href="#contact">Get a quote <span aria-hidden="true">↗</span></a>
           </nav>
           <details className="mobile-nav">
             <summary aria-label="Open navigation"><span></span><span></span></summary>
@@ -92,7 +127,6 @@ export default function Home() {
               <a href="#about">About</a>
               <a href="#brands">Brands</a>
               <a href="#packages">Packages</a>
-              <a href="#contact">Get a quote</a>
             </nav>
           </details>
         </div>
@@ -119,7 +153,13 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="hero-visual" aria-label="A preview of Scrollmate's content management system">
+          <div
+            className="hero-visual"
+            ref={visualRef}
+            onPointerMove={handleVisualMove}
+            onPointerLeave={resetVisual}
+            aria-label="An interactive preview of Scrollmate's content management system"
+          >
             <div className="orbit orbit-one" aria-hidden="true" />
             <div className="orbit orbit-two" aria-hidden="true" />
             <div className="strategy-card">
@@ -128,12 +168,22 @@ export default function Home() {
                   <span className="mini-label">This month</span>
                   <strong>Content pulse</strong>
                 </div>
-                <span className="status-dot">On track</span>
+                <span className="status-dot">{activePulse === 1 ? "In edit" : "On track"}</span>
               </div>
-              <div className="mini-grid" aria-hidden="true">
-                <div className="post post-one"><span>MON</span><b>Brand story</b><i /></div>
-                <div className="post post-two"><span>WED</span><b>Reel edit</b><i>▶</i></div>
-                <div className="post post-three"><span>FRI</span><b>Promo drop</b><i /></div>
+              <div className="mini-grid" aria-label="Select a content item">
+                {pulseItems.map((item, index) => (
+                  <button
+                    type="button"
+                    className={`post ${item.className}${activePulse === index ? " is-active" : ""}`}
+                    key={item.day}
+                    aria-pressed={activePulse === index}
+                    onClick={() => setActivePulse(index)}
+                  >
+                    <span>{item.day}</span>
+                    <b>{item.title}</b>
+                    <i aria-hidden="true">{item.icon}</i>
+                  </button>
+                ))}
               </div>
               <div className="strategy-bottom">
                 <div className="avatar-stack" aria-hidden="true"><i>S</i><i>✓</i><i>↗</i></div>
@@ -250,9 +300,8 @@ export default function Home() {
             {packages.map((item) => (
               <article className={`price-card${item.featured ? " featured" : ""}`} key={item.name}>
                 {item.featured && <div className="popular-badge">Highly recommended</div>}
-                <div className="package-name">{item.name}</div>
-                <div className="price"><strong>{item.price}</strong><span>{item.note}</span></div>
-                <p>{item.description}</p>
+                <h3 className="package-name">{item.name}</h3>
+                <p className="package-desc">{item.description}</p>
                 <div className="rule" />
                 <ul>
                   {item.features.map((feature) => <li key={feature}><span aria-hidden="true">✓</span>{feature}</li>)}
