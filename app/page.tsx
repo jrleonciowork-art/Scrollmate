@@ -206,7 +206,7 @@ export default function Home() {
           </div>
         </div>
         <div className="hero-marquee" aria-hidden="true">
-          <div>STRATEGY <b>✦</b> CONTENT <b>✦</b> COMMUNITY <b>✦</b> GROWTH <b>✦</b> STRATEGY <b>✦</b> CONTENT <b>✦</b> COMMUNITY <b>✦</b> GROWTH</div>
+          <div>STRATEGY <b>+</b> CONTENT <b>+</b> COMMUNITY <b>+</b> GROWTH <b>+</b> STRATEGY <b>+</b> CONTENT <b>+</b> COMMUNITY <b>+</b> GROWTH</div>
         </div>
       </section>
 
@@ -308,10 +308,10 @@ export default function Home() {
                 A creative multimedia and production studio based in the Philippines that specializes in graphic design, branding, video animation, and event media coverage.
               </p>
               <div className="partner-tags" aria-label="Hero Editor Studios specializations">
-                <span>✦ Graphic Design</span>
-                <span>✦ Branding</span>
-                <span>✦ Video Animation</span>
-                <span>✦ Event Media Coverage</span>
+                <span>+ Graphic Design</span>
+                <span>+ Branding</span>
+                <span>+ Video Animation</span>
+                <span>+ Event Media Coverage</span>
               </div>
               <div className="partner-actions">
                 <a className="button button-light" href="#contact">
