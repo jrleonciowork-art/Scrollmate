@@ -19,6 +19,11 @@ const brands = [
     category: "Prints & crafts",
     image: "/sintra-board.webp",
   },
+  {
+    name: "Empleo",
+    category: "Careers & employment",
+    image: "/empleo.png",
+  },
 ];
 
 const packages = [
@@ -149,7 +154,7 @@ export default function Home() {
             </div>
             <div className="hero-proof" aria-label="Scrollmate experience highlights">
               <div><strong>10</strong><span>years of Facebook<br />management experience</span></div>
-              <div><strong>3</strong><span>brands currently<br />under our care</span></div>
+              <div><strong>{brands.length}</strong><span>brands currently<br />under our care</span></div>
             </div>
           </div>
 

@@ -313,8 +313,8 @@ footer { padding: 48px 0 24px; color: white; background: #0c062d; }
 
 @media (min-width: 700px) {
   .section-shell { width: min(1180px, calc(100% - 72px)); }
-  .section-pad { padding: 118px 0; }
-  .value-grid, .brands-grid { grid-template-columns: repeat(3, 1fr); }
+  .value-grid { grid-template-columns: repeat(3, 1fr); }
+  .brands-grid { grid-template-columns: repeat(2, 1fr); }
   .value-card:nth-child(2) { transform: translateY(28px); }
   .value-card:nth-child(2):hover { transform: translateY(21px); }
   .steps-grid { grid-template-columns: repeat(2, 1fr); }
@@ -340,6 +340,7 @@ footer { padding: 48px 0 24px; color: white; background: #0c062d; }
   .hero-visual { min-height: 510px; }
   .stat-reach { right: -1%; }
   .two-col-heading, .package-heading { grid-template-columns: 1.15fr .85fr; align-items: end; gap: 80px; }
+  .brands-grid { grid-template-columns: repeat(4, 1fr); }
   .value-card { min-height: 380px; padding: 34px; }
   .steps-grid { grid-template-columns: repeat(4, 1fr); }
   .step { min-height: 245px; }
