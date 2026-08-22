@@ -6,23 +6,43 @@ import { useRef, useState, type PointerEvent } from "react";
 const brands = [
   {
     name: "Authentic MNL",
-    category: "Fashion & lifestyle",
+    category: "Fashion & Lifestyle",
+    highlight: "Curated aesthetic & organic engagement",
+    tags: ["Grid Design", "Copywriting", "SEO"],
     image: "/authentic-mnl.webp",
+    accent: "rgba(226, 180, 72, 0.35)",
+    borderHover: "rgba(226, 180, 72, 0.55)",
+    tagColor: "#f6d582",
   },
   {
     name: "Cuisineer!",
-    category: "Food & community",
+    category: "Food & Community",
+    highlight: "Thumb-stopping food reels & community hype",
+    tags: ["Short-form Video", "Community", "Growth"],
     image: "/cuisineer.webp",
+    accent: "rgba(215, 60, 45, 0.35)",
+    borderHover: "rgba(230, 80, 60, 0.55)",
+    tagColor: "#ff9d8c",
   },
   {
-    name: "Sintra Board Print & Crafts",
-    category: "Prints & crafts",
+    name: "Gunita: Print & Crafts",
+    category: "Prints & Crafts",
+    highlight: "Product showcases & high-converting ads",
+    tags: ["Ad Strategy", "Visual Assets", "A/B Testing"],
     image: "/sintra-board.webp",
+    accent: "rgba(235, 110, 145, 0.35)",
+    borderHover: "rgba(245, 130, 165, 0.55)",
+    tagColor: "#fbcfe8",
   },
   {
     name: "Empleo",
-    category: "Careers & employment",
+    category: "Careers & Employment",
+    highlight: "Brand positioning & modern audience reach",
+    tags: ["Strategy", "Audience Growth", "Branding"],
     image: "/empleo.png",
+    accent: "rgba(44, 130, 241, 0.35)",
+    borderHover: "rgba(60, 145, 255, 0.55)",
+    tagColor: "#93c5fd",
   },
 ];
 
@@ -61,17 +81,172 @@ const packages = [
   },
 ];
 
+function IconArrowUpRight({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <line x1="7" y1="17" x2="17" y2="7" />
+      <polyline points="7 7 17 7 17 17" />
+    </svg>
+  );
+}
+
+function IconArrowDown({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <line x1="12" y1="5" x2="12" y2="19" />
+      <polyline points="19 12 12 19 5 12" />
+    </svg>
+  );
+}
+
+function IconArrowRight({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <line x1="5" y1="12" x2="19" y2="12" />
+      <polyline points="12 5 19 12 12 19" />
+    </svg>
+  );
+}
+
+function IconCheck({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  );
+}
+
+function IconPlay({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="10"
+      height="10"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <polygon points="6 3 20 12 6 21 6 3" />
+    </svg>
+  );
+}
+
+function IconTrending({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      style={{ display: "inline-block", verticalAlign: "middle", marginRight: "3px" }}
+    >
+      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+      <polyline points="17 6 23 6 23 12" />
+    </svg>
+  );
+}
+
 const steps = [
-  { number: "01", name: "Blueprint", copy: "We align on your goals, audience, voice, and offer.", image: "/process-blueprint.webp" },
-  { number: "02", name: "Build", copy: "We turn the plan into a purposeful content system.", image: "/process-build.webp" },
-  { number: "03", name: "Launch", copy: "We publish, engage, and keep every detail moving.", image: "/process-launch.webp" },
-  { number: "04", name: "Optimize", copy: "We learn from the numbers and sharpen what works.", image: "/process-optimize.webp" },
+  {
+    number: "01",
+    phase: "Discovery & Blueprint",
+    name: "Blueprint",
+    copy: "We align on your revenue goals, ideal audience, brand tone, and content pillars.",
+    tags: ["Audience Persona", "Brand Voice", "Content Pillars"],
+    image: "/process-blueprint.webp",
+    glow: "rgba(168, 85, 247, 0.35)",
+    borderHover: "rgba(168, 85, 247, 0.55)",
+    tagColor: "#d8b4fe",
+  },
+  {
+    number: "02",
+    phase: "Creative Production",
+    name: "Build",
+    copy: "We turn the blueprint into a structured content engine—copywriting, visual design, and video assets.",
+    tags: ["Feed Architecture", "Copy Library", "Short-form Reels"],
+    image: "/process-build.webp",
+    glow: "rgba(236, 72, 153, 0.35)",
+    borderHover: "rgba(236, 72, 153, 0.55)",
+    tagColor: "#f472b6",
+  },
+  {
+    number: "03",
+    phase: "Deployment & Growth",
+    name: "Launch",
+    copy: "We schedule, publish, engage community DMs/comments, and keep your feed active daily.",
+    tags: ["Smart Scheduling", "Community DMs", "Grid Management"],
+    image: "/process-launch.webp",
+    glow: "rgba(249, 115, 22, 0.35)",
+    borderHover: "rgba(249, 115, 22, 0.55)",
+    tagColor: "#fb923c",
+  },
+  {
+    number: "04",
+    phase: "Analytics & Scale",
+    name: "Optimize",
+    copy: "We track performance metrics, run A/B iterations, and double down on top converting hooks.",
+    tags: ["Monthly Reporting", "A/B Hook Testing", "Paid Ad Scale"],
+    image: "/process-optimize.webp",
+    glow: "rgba(34, 197, 94, 0.35)",
+    borderHover: "rgba(34, 197, 94, 0.55)",
+    tagColor: "#4ade80",
+  },
 ];
 
 const pulseItems = [
-  { day: "MON", title: "Brand story", className: "post-one" },
-  { day: "WED", title: "Reel edit", className: "post-two", icon: "▶" },
-  { day: "FRI", title: "Promo drop", className: "post-three" },
+  { day: "MON", title: "Brand story", className: "post-one", hasPlay: false },
+  { day: "WED", title: "Reel edit", className: "post-two", hasPlay: true },
+  { day: "FRI", title: "Promo drop", className: "post-three", hasPlay: false },
 ];
 
 export default function Home() {
@@ -123,6 +298,7 @@ export default function Home() {
           </a>
           <nav className="desktop-nav" aria-label="Primary navigation">
             <a href="#about">About</a>
+            <a href="#system">System</a>
             <a href="#brands">Brands</a>
             <a href="#partner">Partner</a>
             <a href="#packages">Packages</a>
@@ -131,6 +307,7 @@ export default function Home() {
             <summary aria-label="Open navigation"><span></span><span></span></summary>
             <nav aria-label="Mobile navigation">
               <a href="#about">About</a>
+              <a href="#system">System</a>
               <a href="#brands">Brands</a>
               <a href="#partner">Partner</a>
               <a href="#packages">Packages</a>
@@ -151,8 +328,8 @@ export default function Home() {
               and strategies built to convert.
             </p>
             <div className="hero-actions">
-              <a className="button button-light" href="#contact">Get a quote <span aria-hidden="true">↗</span></a>
-              <a className="button button-ghost" href="#packages">View packages <span aria-hidden="true">↓</span></a>
+              <a className="button button-light" href="#contact">Get a quote <IconArrowUpRight /></a>
+              <a className="button button-ghost" href="#packages">View packages <IconArrowDown /></a>
             </div>
             <div className="hero-proof" aria-label="Scrollmate experience highlights">
               <div><strong>10</strong><span>years of Facebook<br />management experience</span></div>
@@ -188,17 +365,17 @@ export default function Home() {
                   >
                     <span>{item.day}</span>
                     <b>{item.title}</b>
-                    <i aria-hidden="true">{item.icon}</i>
+                    <i aria-hidden="true">{item.hasPlay ? <IconPlay /> : null}</i>
                   </button>
                 ))}
               </div>
               <div className="strategy-bottom">
-                <div className="avatar-stack" aria-hidden="true"><i>S</i><i>✓</i><i>↗</i></div>
+                <div className="avatar-stack" aria-hidden="true"><i>S</i><i><IconCheck /></i><i><IconArrowUpRight /></i></div>
                 <span>Plan. Create. Connect. Grow.</span>
               </div>
             </div>
             <div className="floating-stat stat-reach">
-              <span>Monthly reach</span><strong>+38%</strong><small>↗ growing</small>
+              <span>Monthly reach</span><strong>+38%</strong><small><IconTrending /> growing</small>
             </div>
             <div className="floating-stat stat-community">
               <span>Community</span><strong>Active daily</strong><small>Comments + DMs</small>
@@ -226,7 +403,7 @@ export default function Home() {
                 Backed by nearly 10 years of Facebook management experience and a corporate
                 media buying background, we balance creative instinct with commercial thinking.
               </p>
-              <a className="text-link" href="#contact">Build with Scrollmate <span aria-hidden="true">↗</span></a>
+              <a className="text-link" href="#contact">Build with Scrollmate <IconArrowUpRight /></a>
             </div>
           </div>
 
@@ -253,18 +430,74 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="system-section">
+      <section className="system-section section-pad" id="system">
+        <div className="system-ambient-glow" aria-hidden="true" />
         <div className="section-shell">
-          <div className="system-intro">
-            <div className="eyebrow light"><span /> The Scrollmate system</div>
-            <h2>A clear path from idea to impact.</h2>
+          <div className="section-heading two-col-heading system-heading">
+            <div>
+              <div className="eyebrow light"><span /> The Scrollmate system</div>
+              <h2>A clear path from<br /><em>idea to impact.</em></h2>
+            </div>
+            <div className="heading-copy">
+              <p className="lead" style={{ color: "#d5ccff" }}>
+                A proven four-stage framework designed to take the guesswork out of social media and deliver sustainable, compounding brand growth.
+              </p>
+              <p>
+                From foundational research to high-volume asset production, daily distribution, and iterative data refinement.
+              </p>
+            </div>
           </div>
+
+          <div className="system-pipeline" aria-hidden="true">
+            <div className="pipeline-line" />
+            {steps.map((step) => (
+              <div className="pipeline-node" key={step.number}>
+                <span className="pipeline-dot" />
+                <span className="pipeline-label">Phase {step.number}</span>
+              </div>
+            ))}
+          </div>
+
           <div className="steps-grid">
             {steps.map((step) => (
-              <article className="step" key={step.number} style={{ backgroundImage: `url(${step.image})` }}>
-                <div className="step-top"><span>{step.number}</span><i aria-hidden="true">→</i></div>
-                <h3>{step.name}</h3>
-                <p>{step.copy}</p>
+              <article
+                className="step-card"
+                key={step.number}
+                style={{
+                  "--step-glow": step.glow,
+                  "--step-border": step.borderHover,
+                  "--step-tag": step.tagColor,
+                } as React.CSSProperties}
+              >
+                <div className="step-card-glow" aria-hidden="true" />
+                <div className="step-card-top">
+                  <span className="step-number-badge">{step.number}</span>
+                  <div className="step-arrow-circle" aria-hidden="true">
+                    <IconArrowRight />
+                  </div>
+                </div>
+
+                <div className="step-media-wrap">
+                  <Image
+                    src={step.image}
+                    width={600}
+                    height={400}
+                    alt={`${step.name} stage visual`}
+                    className="step-media-img"
+                  />
+                  <div className="step-media-overlay" />
+                </div>
+
+                <div className="step-card-body">
+                  <span className="step-phase-label">{step.phase}</span>
+                  <h3>{step.name}</h3>
+                  <p>{step.copy}</p>
+                  <div className="step-tag-stack">
+                    {step.tags.map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
+                  </div>
+                </div>
               </article>
             ))}
           </div>
@@ -272,21 +505,51 @@ export default function Home() {
       </section>
 
       <section className="brands-section section-pad" id="brands">
+        <div className="brands-ambient-glow" aria-hidden="true" />
         <div className="section-shell">
           <div className="section-heading centered-heading">
-            <div className="eyebrow"><span /> Brands we manage</div>
+            <div className="eyebrow light"><span /> Brands we manage</div>
             <h2>Different stories.<br />One thoughtful <em>strategy.</em></h2>
             <p>We show up as an extension of every team—and make every brand feel unmistakably its own.</p>
           </div>
           <div className="brands-grid">
             {brands.map((brand, index) => (
-              <article className="brand-card" key={brand.name}>
+              <article
+                className="brand-card"
+                key={brand.name}
+                style={{
+                  "--brand-glow": brand.accent,
+                  "--brand-border": brand.borderHover,
+                  "--brand-tag": brand.tagColor,
+                } as React.CSSProperties}
+              >
+                <div className="brand-card-glow" aria-hidden="true" />
+                <div className="brand-card-top">
+                  <span className="brand-index">0{index + 1}</span>
+                  <span className="brand-status"><span className="status-indicator" />Active</span>
+                </div>
                 <div className="brand-image-wrap">
-                  <Image src={brand.image} width={437} height={437} alt={`${brand.name} logo`} />
+                  <Image
+                    src={brand.image}
+                    width={437}
+                    height={437}
+                    alt={`${brand.name} logo`}
+                    className="brand-image"
+                  />
+                  <div className="brand-image-overlay" />
                 </div>
                 <div className="brand-card-copy">
-                  <span>0{index + 1} / {brand.category}</span>
-                  <h3>{brand.name}</h3>
+                  <span className="brand-category">{brand.category}</span>
+                  <div className="brand-title-row">
+                    <h3>{brand.name}</h3>
+                    <span className="brand-arrow" aria-hidden="true"><IconArrowUpRight /></span>
+                  </div>
+                  <p className="brand-highlight">{brand.highlight}</p>
+                  <div className="brand-tag-list">
+                    {brand.tags.map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
+                  </div>
                 </div>
               </article>
             ))}
@@ -315,7 +578,7 @@ export default function Home() {
               </div>
               <div className="partner-actions">
                 <a className="button button-light" href="#contact">
-                  Work with us <span aria-hidden="true">↗</span>
+                  Work with us <IconArrowUpRight />
                 </a>
               </div>
             </div>
@@ -354,10 +617,10 @@ export default function Home() {
                 <p className="package-desc">{item.description}</p>
                 <div className="rule" />
                 <ul>
-                  {item.features.map((feature) => <li key={feature}><span aria-hidden="true">✓</span>{feature}</li>)}
+                  {item.features.map((feature) => <li key={feature}><span aria-hidden="true"><IconCheck /></span>{feature}</li>)}
                 </ul>
                 <a className={`button ${item.featured ? "button-light" : "button-purple"}`} href="#contact">
-                  Choose {item.name.replace("The ", "")} <span aria-hidden="true">↗</span>
+                  Choose {item.name.replace("The ", "")} <IconArrowUpRight />
                 </a>
               </article>
             ))}
@@ -400,7 +663,7 @@ export default function Home() {
           </a>
           <p>Your soulmate for every scroll you take.</p>
           <nav aria-label="Footer navigation">
-            <a href="#about">About</a><a href="#brands">Brands</a><a href="#partner">Partner</a><a href="#packages">Packages</a><a href="#contact">Contact</a>
+            <a href="#about">About</a><a href="#system">System</a><a href="#brands">Brands</a><a href="#partner">Partner</a><a href="#packages">Packages</a><a href="#contact">Contact</a>
           </nav>
         </div>
         <div className="section-shell footer-bottom">

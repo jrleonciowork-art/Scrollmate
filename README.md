@@ -64,7 +64,7 @@ Package inclusions reflect the August 2026 company profile and should be confirm
 
 - Authentic MNL
 - Cuisineer!
-- Sintra Board Print & Crafts
+- Gunita: Print & Crafts
 - Empleo
 
 ## Creative & production partner
