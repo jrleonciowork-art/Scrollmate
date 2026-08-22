@@ -67,6 +67,10 @@ Package inclusions reflect the August 2026 company profile and should be confirm
 - Sintra Board Print & Crafts
 - Empleo
 
+## Creative & production partner
+
+- **Hero Editor Studios** — A creative multimedia and production studio based in the Philippines that specializes in graphic design, branding, video animation, and event media coverage.
+
 ## Platforms and tools
 
 Scrollmate works across Facebook, Instagram, and TikTok, supported by Google Workspace, Canva, Meta Business Suite, Adobe Creative Cloud, and CapCut.

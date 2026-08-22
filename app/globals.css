@@ -264,6 +264,24 @@ h1 em, h2 em { color: var(--purple-300); font-style: normal; }
 .brand-card-copy span { color: #7a728e; font-size: 9px; text-transform: uppercase; letter-spacing: .13em; }
 .brand-card-copy h3 { margin: 8px 0 0; font-size: 22px; }
 
+.partner-section { position: relative; background: var(--warm); }
+.partner-card { position: relative; overflow: hidden; display: grid; gap: 36px; align-items: center; padding: 38px 24px; color: white; border-radius: 30px; background: radial-gradient(circle at 88% 22%, rgba(245,140,35,.18) 0%, transparent 45%), linear-gradient(135deg, #140943 0%, #1e1159 55%, #0e0529 100%); border: 1px solid rgba(255,255,255,.13); box-shadow: 0 24px 64px rgba(18,9,64,.22); }
+.partner-glow { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(40px); }
+.partner-glow-one { width: 240px; height: 240px; background: rgba(245,140,35,.16); top: -40px; right: -40px; }
+.partner-glow-two { width: 180px; height: 180px; background: rgba(109,80,219,.22); bottom: -40px; left: -40px; }
+.partner-content { position: relative; z-index: 1; }
+.partner-eyebrow { display: inline-flex; align-items: center; gap: 9px; text-transform: uppercase; letter-spacing: .15em; font-size: 11px; font-weight: 800; color: #ffb774; }
+.partner-eyebrow span { width: 24px; height: 2px; background: currentColor; }
+.partner-content h2 { margin: 16px 0 18px; font-size: clamp(36px, 7vw, 62px); line-height: 1.02; color: white; }
+.partner-lead { max-width: 560px; color: rgba(255,255,255,.78); font-size: 16px; line-height: 1.7; margin: 0 0 26px; }
+.partner-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; }
+.partner-tags span { padding: 7px 13px; color: #f7ede0; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .02em; }
+.partner-visual { position: relative; z-index: 1; display: flex; justify-content: center; align-items: center; }
+.partner-logo-box { position: relative; width: 100%; max-width: 320px; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; padding: 24px; background: #080514; border: 1px solid rgba(245,140,35,.28); border-radius: 26px; box-shadow: 0 20px 50px rgba(0,0,0,.4), inset 0 0 32px rgba(245,140,35,.1); transition: transform .3s ease, border-color .3s ease; }
+.partner-logo-box:hover { transform: translateY(-4px); border-color: rgba(245,140,35,.5); }
+.partner-logo-img { width: 82%; height: 82%; object-fit: contain; }
+.partner-badge { position: absolute; bottom: 12px; padding: 6px 14px; background: rgba(18,9,44,.88); backdrop-filter: blur(8px); border: 1px solid rgba(245,140,35,.35); border-radius: 999px; font-size: 9px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #ffcb94; }
+
 .packages-section { background: white; }
 .package-heading { display: grid; gap: 24px; margin-bottom: 50px; }
 .package-heading > p { max-width: 390px; align-self: end; color: #706982; line-height: 1.65; }
@@ -319,6 +337,8 @@ footer { padding: 48px 0 24px; color: white; background: #0c062d; }
   .value-card:nth-child(2):hover { transform: translateY(21px); }
   .steps-grid { grid-template-columns: repeat(2, 1fr); }
   .step { padding: 28px; }
+  .partner-card { padding: 48px 38px; }
+  .partner-logo-box { max-width: 340px; }
   .pricing-grid { grid-template-columns: repeat(3, 1fr); align-items: stretch; }
   .price-card { padding: 32px 24px; }
   .price-card.featured { transform: translateY(-14px); }
@@ -341,6 +361,8 @@ footer { padding: 48px 0 24px; color: white; background: #0c062d; }
   .stat-reach { right: -1%; }
   .two-col-heading, .package-heading { grid-template-columns: 1.15fr .85fr; align-items: end; gap: 80px; }
   .brands-grid { grid-template-columns: repeat(4, 1fr); }
+  .partner-card { grid-template-columns: 1.15fr .85fr; padding: 58px 52px; gap: 48px; }
+  .partner-logo-box { max-width: 360px; }
   .value-card { min-height: 380px; padding: 34px; }
   .steps-grid { grid-template-columns: repeat(4, 1fr); }
   .step { min-height: 245px; }

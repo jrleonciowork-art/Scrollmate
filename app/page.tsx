@@ -124,6 +124,7 @@ export default function Home() {
           <nav className="desktop-nav" aria-label="Primary navigation">
             <a href="#about">About</a>
             <a href="#brands">Brands</a>
+            <a href="#partner">Partner</a>
             <a href="#packages">Packages</a>
           </nav>
           <details className="mobile-nav">
@@ -131,6 +132,7 @@ export default function Home() {
             <nav aria-label="Mobile navigation">
               <a href="#about">About</a>
               <a href="#brands">Brands</a>
+              <a href="#partner">Partner</a>
               <a href="#packages">Packages</a>
             </nav>
           </details>
@@ -292,6 +294,49 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="partner-section section-pad" id="partner">
+        <div className="section-shell">
+          <div className="partner-card">
+            <div className="partner-glow partner-glow-one" aria-hidden="true" />
+            <div className="partner-glow partner-glow-two" aria-hidden="true" />
+            <div className="partner-content">
+              <div className="partner-eyebrow">
+                <span /> Meet our partner
+              </div>
+              <h2>Hero Editor Studios</h2>
+              <p className="partner-lead">
+                A creative multimedia and production studio based in the Philippines that specializes in graphic design, branding, video animation, and event media coverage.
+              </p>
+              <div className="partner-tags" aria-label="Hero Editor Studios specializations">
+                <span>✦ Graphic Design</span>
+                <span>✦ Branding</span>
+                <span>✦ Video Animation</span>
+                <span>✦ Event Media Coverage</span>
+              </div>
+              <div className="partner-actions">
+                <a className="button button-light" href="#contact">
+                  Work with us <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </div>
+            <div className="partner-visual">
+              <div className="partner-logo-box">
+                <Image
+                  src="/hero-editor-studios.png"
+                  width={440}
+                  height={440}
+                  alt="Hero Editor Studios logo"
+                  className="partner-logo-img"
+                />
+                <div className="partner-badge">
+                  <span>Creative &amp; Production Partner</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="packages-section section-pad" id="packages">
         <div className="section-shell">
           <div className="section-heading package-heading">
@@ -355,7 +400,7 @@ export default function Home() {
           </a>
           <p>Your soulmate for every scroll you take.</p>
           <nav aria-label="Footer navigation">
-            <a href="#about">About</a><a href="#brands">Brands</a><a href="#packages">Packages</a><a href="#contact">Contact</a>
+            <a href="#about">About</a><a href="#brands">Brands</a><a href="#partner">Partner</a><a href="#packages">Packages</a><a href="#contact">Contact</a>
           </nav>
         </div>
         <div className="section-shell footer-bottom">
