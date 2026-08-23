@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 
 const brands = [
   {
@@ -196,6 +196,25 @@ function IconTrending({ className = "" }: { className?: string }) {
   );
 }
 
+function IconChevronDown() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="chevron-icon"
+    >
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  );
+}
+
 const steps = [
   {
     number: "01",
@@ -252,6 +271,18 @@ const pulseItems = [
 export default function Home() {
   const visualRef = useRef<HTMLDivElement>(null);
   const [activePulse, setActivePulse] = useState(0);
+  const [isOverviewOpen, setIsOverviewOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOverviewOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleVisualMove = (event: PointerEvent<HTMLDivElement>) => {
     if (event.pointerType === "touch") return;
@@ -297,20 +328,99 @@ export default function Home() {
             />
           </a>
           <nav className="desktop-nav" aria-label="Primary navigation">
-            <a href="#about">About</a>
-            <a href="#system">System</a>
-            <a href="#brands">Brands</a>
-            <a href="#partner">Partner</a>
-            <a href="#packages">Packages</a>
+            <div
+              className={`nav-dropdown${isOverviewOpen ? " is-open" : ""}`}
+              ref={dropdownRef}
+              onMouseEnter={() => setIsOverviewOpen(true)}
+              onMouseLeave={() => setIsOverviewOpen(false)}
+            >
+              <button
+                className="nav-dropdown-trigger"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded={isOverviewOpen}
+                onClick={() => setIsOverviewOpen((prev) => !prev)}
+              >
+                <span>Overview</span>
+                <IconChevronDown />
+              </button>
+              <div className="nav-dropdown-menu" role="menu">
+                <a
+                  href="#about"
+                  className="dropdown-item"
+                  role="menuitem"
+                  onClick={() => setIsOverviewOpen(false)}
+                >
+                  <span className="dropdown-title">About Scrollmate</span>
+                  <span className="dropdown-desc">Vision & value pillars</span>
+                </a>
+                <a
+                  href="#system"
+                  className="dropdown-item"
+                  role="menuitem"
+                  onClick={() => setIsOverviewOpen(false)}
+                >
+                  <span className="dropdown-title">The System</span>
+                  <span className="dropdown-desc">4-stage content pipeline</span>
+                </a>
+                <a
+                  href="#brands"
+                  className="dropdown-item"
+                  role="menuitem"
+                  onClick={() => setIsOverviewOpen(false)}
+                >
+                  <span className="dropdown-title">Brands We Manage</span>
+                  <span className="dropdown-desc">Portfolio spotlight</span>
+                </a>
+                <a
+                  href="#partner"
+                  className="dropdown-item"
+                  role="menuitem"
+                  onClick={() => setIsOverviewOpen(false)}
+                >
+                  <span className="dropdown-title">Creative Partner</span>
+                  <span className="dropdown-desc">Hero Editor Studios</span>
+                </a>
+                <a
+                  href="#packages"
+                  className="dropdown-item"
+                  role="menuitem"
+                  onClick={() => setIsOverviewOpen(false)}
+                >
+                  <span className="dropdown-title">Packages</span>
+                  <span className="dropdown-desc">Tier setups & inclusions</span>
+                </a>
+              </div>
+            </div>
+            <a href="/agents" className="nav-link">
+              Agents
+            </a>
+            <a href="/resources" className="nav-link">
+              Resources
+            </a>
+            <a href="#contact" className="nav-cta-btn">
+              Get in touch
+            </a>
           </nav>
           <details className="mobile-nav">
             <summary aria-label="Open navigation"><span></span><span></span></summary>
             <nav aria-label="Mobile navigation">
-              <a href="#about">About</a>
-              <a href="#system">System</a>
-              <a href="#brands">Brands</a>
-              <a href="#partner">Partner</a>
-              <a href="#packages">Packages</a>
+              <div className="mobile-nav-section">
+                <span className="mobile-section-title">Pages</span>
+                <a href="#home" className="mobile-page-link">Home</a>
+                <a href="/agents" className="mobile-page-link">Agents</a>
+                <a href="/resources" className="mobile-page-link">Resources</a>
+              </div>
+              <div className="mobile-nav-divider" />
+              <div className="mobile-nav-section">
+                <span className="mobile-section-title">Overview Sections</span>
+                <a href="#about" className="mobile-sub-link">About</a>
+                <a href="#system" className="mobile-sub-link">System</a>
+                <a href="#brands" className="mobile-sub-link">Brands</a>
+                <a href="#partner" className="mobile-sub-link">Partner</a>
+                <a href="#packages" className="mobile-sub-link">Packages</a>
+                <a href="#contact" className="mobile-sub-link">Contact</a>
+              </div>
             </nav>
           </details>
         </div>
@@ -663,7 +773,7 @@ export default function Home() {
           </a>
           <p>Your soulmate for every scroll you take.</p>
           <nav aria-label="Footer navigation">
-            <a href="#about">About</a><a href="#system">System</a><a href="#brands">Brands</a><a href="#partner">Partner</a><a href="#packages">Packages</a><a href="#contact">Contact</a>
+            <a href="#about">About</a><a href="#system">System</a><a href="#brands">Brands</a><a href="#partner">Partner</a><a href="#packages">Packages</a><a href="/agents">Agents</a><a href="/resources">Resources</a><a href="#contact">Contact</a>
           </nav>
         </div>
         <div className="section-shell footer-bottom">

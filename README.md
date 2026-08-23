@@ -67,9 +67,21 @@ Package inclusions reflect the August 2026 company profile and should be confirm
 - Gunita: Print & Crafts
 - Empleo
 
+## Leadership & team operatives
+
+The dedicated `/agents` (or `/team`) page spotlights the people and specialist divisions powering Scrollmate:
+- **Founder & Managing Director**: **Rob Leoncio** — Leading brand strategy, high-converting content architectures, paid funnel scaling, and creative direction.
+- **Operative Divisions**: Creative & Production, Community & Retention, and Growth & Analytics squads.
+
 ## Creative & production partner
 
 - **Hero Editor Studios** — A creative multimedia and production studio based in the Philippines that specializes in graphic design, branding, video animation, and event media coverage.
+
+## Resources & knowledge hub
+
+The dedicated `/resources` page features curated talks and strategic playbooks on why social media management and digital storefronts are vital for growing businesses:
+- **Featured Keynote**: *How Social Media is Changing the Way We Do Business* by Austin Falter (TEDxBountiful)
+- **Strategic Playbooks**: Frameworks for hook architecture, storefront audits, and content flywheels
 
 ## Platforms and tools
 
