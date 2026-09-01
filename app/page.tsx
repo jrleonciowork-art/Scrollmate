@@ -48,35 +48,43 @@ const brands = [
 
 const packages = [
   {
+    tier: "Tier 01",
+    tierLabel: "Organic Foundation",
     name: "The Optimizer",
-    description: "For brands that need a stronger, more consistent social presence.",
+    description: "For brands that need a stronger, more consistent social presence and storefront credibility.",
     features: [
-      "Profile uplift & SEO",
+      "Profile uplift & bio SEO optimization",
       "Content scheduling & copywriting",
-      "Grid management",
-      "Community management",
-      "Monthly performance report",
+      "Aesthetic grid direction & feed planning",
+      "Community management & proactive response",
+      "Monthly comprehensive performance report",
     ],
   },
   {
+    tier: "Tier 02",
+    tierLabel: "Content Engine",
     name: "The Creator",
-    description: "For brands ready to turn strategy into thumb-stopping content.",
+    description: "For brands ready to turn strategy into high-volume, thumb-stopping creative assets.",
     features: [
-      "Everything in The Optimizer",
-      "Visual asset creation",
-      "Short-form video editing",
-      "Monthly content strategy plan",
+      "Everything included in The Optimizer",
+      "Custom visual asset creation & carousel design",
+      "Short-form video & reel editing (with hooks)",
+      "Monthly content strategy plan & roadmap",
+      "Priority creative revision rounds",
     ],
     featured: true,
   },
   {
+    tier: "Tier 03",
+    tierLabel: "Growth & Paid Scale",
     name: "The Accelerator",
-    description: "For growing brands ready to pair organic content with paid scale.",
+    description: "For growing brands ready to pair high-impact organic content with paid acquisition.",
     features: [
-      "Everything in The Creator",
-      "Ad campaign strategy & setup",
-      "A/B testing",
-      "Campaign management",
+      "Everything included in The Creator",
+      "Paid ad campaign strategy & setup",
+      "Creative & copy A/B hook testing",
+      "Full-funnel campaign management & optimization",
+      "Dedicated ROAS scaling & growth reporting",
     ],
   },
 ];
@@ -392,9 +400,6 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <a href="/agents" className="nav-link">
-              Agents
-            </a>
             <a href="/resources" className="nav-link">
               Resources
             </a>
@@ -408,7 +413,6 @@ export default function Home() {
               <div className="mobile-nav-section">
                 <span className="mobile-section-title">Pages</span>
                 <a href="#home" className="mobile-page-link">Home</a>
-                <a href="/agents" className="mobile-page-link">Agents</a>
                 <a href="/resources" className="mobile-page-link">Resources</a>
               </div>
               <div className="mobile-nav-divider" />
@@ -615,7 +619,11 @@ export default function Home() {
       </section>
 
       <section className="brands-section section-pad" id="brands">
+        <div className="brands-transition-glow" aria-hidden="true" />
+        <div className="brands-divider-line" aria-hidden="true" />
         <div className="brands-ambient-glow" aria-hidden="true" />
+        <div className="brands-mesh-glow brands-mesh-one" aria-hidden="true" />
+        <div className="brands-mesh-glow brands-mesh-two" aria-hidden="true" />
         <div className="section-shell">
           <div className="section-heading centered-heading">
             <div className="eyebrow light"><span /> Brands we manage</div>
@@ -711,31 +719,68 @@ export default function Home() {
       </section>
 
       <section className="packages-section section-pad" id="packages">
+        <div className="packages-ambient-glow" aria-hidden="true" />
         <div className="section-shell">
           <div className="section-heading package-heading">
             <div>
-              <div className="eyebrow"><span /> Packages</div>
+              <div className="eyebrow"><span /> Packages &amp; Investment</div>
               <h2>Pick your pace.<br />We&apos;ll bring the <em>momentum.</em></h2>
             </div>
-            <p>Clear packages. Practical deliverables. No confusing agency speak.</p>
+            <div className="heading-copy">
+              <p className="lead" style={{ color: "var(--purple-950)" }}>
+                Clear scopes. Practical deliverables. No confusing agency speak.
+              </p>
+              <p>
+                Transparent packages designed to meet your business exactly where it is—from foundational storefront consistency to multi-channel organic and paid scale.
+              </p>
+            </div>
           </div>
           <div className="pricing-grid">
             {packages.map((item) => (
               <article className={`price-card${item.featured ? " featured" : ""}`} key={item.name}>
-                {item.featured && <div className="popular-badge">Highly recommended</div>}
-                <h3 className="package-name">{item.name}</h3>
-                <p className="package-desc">{item.description}</p>
+                {item.featured && (
+                  <div className="popular-badge">
+                    <span>Highly recommended</span>
+                  </div>
+                )}
+                <div className="package-card-top">
+                  <div className="package-tier-row">
+                    <span className="package-tier-code">{item.tier}</span>
+                    <span className="package-tier-tag">{item.tierLabel}</span>
+                  </div>
+                  <h3 className="package-name">{item.name}</h3>
+                  <p className="package-desc">{item.description}</p>
+                </div>
                 <div className="rule" />
-                <ul>
-                  {item.features.map((feature) => <li key={feature}><span aria-hidden="true"><IconCheck /></span>{feature}</li>)}
+                <div className="package-features-label">Core Deliverables &amp; Inclusions</div>
+                <ul className="package-features-list">
+                  {item.features.map((feature) => (
+                    <li key={feature}>
+                      <span className="feature-check-icon" aria-hidden="true">
+                        <IconCheck />
+                      </span>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
                 </ul>
-                <a className={`button ${item.featured ? "button-light" : "button-purple"}`} href="#contact">
-                  Choose {item.name.replace("The ", "")} <IconArrowUpRight />
-                </a>
+                <div className="package-card-action">
+                  <a className={`button ${item.featured ? "button-featured-cta" : "button-purple"}`} href="#contact">
+                    Choose {item.name.replace("The ", "")} <IconArrowUpRight />
+                  </a>
+                </div>
               </article>
             ))}
           </div>
-          <p className="pricing-note">Need something more tailored? <a href="#contact">Let&apos;s shape the right setup together.</a></p>
+          <div className="pricing-tailored-banner">
+            <div className="tailored-badge">Custom Engagements</div>
+            <div className="tailored-content">
+              <strong>Need something more tailored to your brand?</strong>
+              <p>We craft bespoke enterprise scopes, high-volume production sprints, and dedicated fractional growth teams.</p>
+            </div>
+            <a href="#contact" className="button button-tailored">
+              Let&apos;s shape your setup <IconArrowUpRight />
+            </a>
+          </div>
         </div>
       </section>
 
@@ -773,7 +818,7 @@ export default function Home() {
           </a>
           <p>Your soulmate for every scroll you take.</p>
           <nav aria-label="Footer navigation">
-            <a href="#about">About</a><a href="#system">System</a><a href="#brands">Brands</a><a href="#partner">Partner</a><a href="#packages">Packages</a><a href="/agents">Agents</a><a href="/resources">Resources</a><a href="#contact">Contact</a>
+            <a href="#about">About</a><a href="#system">System</a><a href="#brands">Brands</a><a href="#partner">Partner</a><a href="#packages">Packages</a><a href="/resources">Resources</a><a href="#contact">Contact</a>
           </nav>
         </div>
         <div className="section-shell footer-bottom">

@@ -251,94 +251,172 @@ export default function AgentsPage() {
           </div>
           <div className="agents-hero-copy">
             <div className="eyebrow light">
-              <span></span> Scrollmate Operatives & Leadership
+              <span></span> Scrollmate Operatives &amp; Leadership
             </div>
             <h1>
               The minds behind <em>every scroll.</em>
             </h1>
             <p className="agents-hero-lead">
-              A specialized collective of brand strategists, creative directors, and growth
+              A specialized collective of brand strategists, campaign directors, and growth
               architects dedicated to making every brand feel unmistakably its own.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Founder & Managing Director Spotlight */}
-      <section className="founder-section section-pad" id="founder">
+      {/* Leadership & Strategic Direction Section */}
+      <section className="leadership-section section-pad" id="leadership">
         <div className="section-shell">
-          <div className="founder-card">
-            <div className="founder-card-glow" aria-hidden="true" />
-            <div className="founder-grid">
-              <div className="founder-visual">
-                <div className="founder-popout-stage">
-                  <div className="founder-popout-glow" aria-hidden="true" />
-                  <Image
-                    src="/rob-leoncio-popout.png"
-                    width={600}
-                    height={600}
-                    alt="Rob Leoncio — Founder & Managing Director"
-                    className="founder-popout-img"
-                    priority
-                  />
-                  <div className="founder-status-badge">
-                    <span className="status-indicator" /> Executive Leadership
-                  </div>
-                </div>
-              </div>
-
-              <div className="founder-info">
-                <div className="founder-role-badge">
-                  <span>Founder &amp; Managing Director</span>
-                </div>
-                <h2>Rob Leoncio</h2>
-                <p className="founder-title-sub">
-                  Head of Brand Strategy, Creative Direction &amp; Agency Growth
-                </p>
-
-                <div className="founder-specialties">
-                  <h4>Core Focus &amp; Specializations</h4>
-                  <div className="specialties-grid">
-                    <div className="specialty-item">
-                      <span className="specialty-icon" aria-hidden="true">
-                        <IconCheck />
-                      </span>
-                      <span>Brand Architecture &amp; Strategic Voice</span>
-                    </div>
-                    <div className="specialty-item">
-                      <span className="specialty-icon" aria-hidden="true">
-                        <IconCheck />
-                      </span>
-                      <span>High-Converting Content Engines</span>
-                    </div>
-                    <div className="specialty-item">
-                      <span className="specialty-icon" aria-hidden="true">
-                        <IconCheck />
-                      </span>
-                      <span>Paid Ad Funnel &amp; Growth Scaling</span>
-                    </div>
-                    <div className="specialty-item">
-                      <span className="specialty-icon" aria-hidden="true">
-                        <IconCheck />
-                      </span>
-                      <span>Aesthetic Direction &amp; Grid Strategy</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="founder-actions">
-                  <Link href="/#contact" className="button button-white">
-                    Work Directly with Rob <IconArrowUpRight />
-                  </Link>
-                  <a
-                    href="mailto:Scrollmate.business@gmail.com"
-                    className="button button-outline-light"
-                  >
-                    Email Leadership
-                  </a>
-                </div>
-              </div>
+          <div className="section-heading centered-heading">
+            <div className="eyebrow light">
+              <span></span> Executive Leadership
             </div>
+            <h2>
+              The directors guiding your <em>growth.</em>
+            </h2>
+            <p>
+              Combining brand architecture, high-converting content pipelines, and performance
+              campaign execution.
+            </p>
+          </div>
+
+          <div className="leadership-cards-grid">
+            {/* Rob Leoncio Card */}
+            <article className="leader-card leader-card-rob">
+              <div className="leader-card-glow glow-rob" aria-hidden="true" />
+              <div className="leader-grid">
+                <div className="leader-visual">
+                  <div className="founder-popout-stage">
+                    <div className="founder-popout-glow glow-rob" aria-hidden="true" />
+                    <Image
+                      src="/rob-leoncio-popout.png"
+                      width={600}
+                      height={600}
+                      alt="Rob Leoncio — Founder & Managing Director"
+                      className="founder-popout-img"
+                      priority
+                    />
+                    <div className="founder-status-badge badge-rob">
+                      <span className="status-indicator indicator-rob" /> Executive Leadership
+                    </div>
+                  </div>
+                </div>
+
+                <div className="leader-info">
+                  <div className="founder-role-badge badge-role-rob">
+                    <span>Founder &amp; Managing Director</span>
+                  </div>
+                  <h2>Rob Leoncio</h2>
+                  <p className="founder-title-sub">
+                    Head of Brand Strategy, Creative Direction &amp; Agency Growth
+                  </p>
+
+                  <div className="founder-specialties">
+                    <h4>Core Focus &amp; Specializations</h4>
+                    <div className="specialties-grid">
+                      <div className="specialty-item">
+                        <span className="specialty-icon icon-rob" aria-hidden="true">
+                          <IconCheck />
+                        </span>
+                        <span>Brand Architecture &amp; Strategic Voice</span>
+                      </div>
+                      <div className="specialty-item">
+                        <span className="specialty-icon icon-rob" aria-hidden="true">
+                          <IconCheck />
+                        </span>
+                        <span>High-Converting Content Engines</span>
+                      </div>
+                      <div className="specialty-item">
+                        <span className="specialty-icon icon-rob" aria-hidden="true">
+                          <IconCheck />
+                        </span>
+                        <span>Paid Ad Funnel &amp; Growth Scaling</span>
+                      </div>
+                      <div className="specialty-item">
+                        <span className="specialty-icon icon-rob" aria-hidden="true">
+                          <IconCheck />
+                        </span>
+                        <span>Aesthetic Direction &amp; Grid Strategy</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="founder-actions">
+                    <Link href="/#contact" className="button button-white">
+                      Work with Rob <IconArrowUpRight />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            {/* Jen Leoncio Card */}
+            <article className="leader-card leader-card-jen">
+              <div className="leader-card-glow glow-jen" aria-hidden="true" />
+              <div className="leader-grid">
+                <div className="leader-visual">
+                  <div className="founder-popout-stage">
+                    <div className="founder-popout-glow glow-jen" aria-hidden="true" />
+                    <Image
+                      src="/jen-leoncio-popout.png"
+                      width={600}
+                      height={600}
+                      alt="Jen Leoncio — Digital Campaigns Director"
+                      className="founder-popout-img"
+                    />
+                    <div className="founder-status-badge badge-jen">
+                      <span className="status-indicator indicator-jen" /> Campaigns Leadership
+                    </div>
+                  </div>
+                </div>
+
+                <div className="leader-info">
+                  <div className="founder-role-badge badge-role-jen">
+                    <span>Digital Campaigns Director</span>
+                  </div>
+                  <h2>Jen Leoncio</h2>
+                  <p className="founder-title-sub">
+                    Multichannel Campaign Strategy, Performance Marketing &amp; Client Growth
+                  </p>
+
+                  <div className="founder-specialties">
+                    <h4>Core Focus &amp; Specializations</h4>
+                    <div className="specialties-grid">
+                      <div className="specialty-item">
+                        <span className="specialty-icon icon-jen" aria-hidden="true">
+                          <IconCheck />
+                        </span>
+                        <span>Omnichannel Campaign Architecture</span>
+                      </div>
+                      <div className="specialty-item">
+                        <span className="specialty-icon icon-jen" aria-hidden="true">
+                          <IconCheck />
+                        </span>
+                        <span>Performance Marketing &amp; Audience Targeting</span>
+                      </div>
+                      <div className="specialty-item">
+                        <span className="specialty-icon icon-jen" aria-hidden="true">
+                          <IconCheck />
+                        </span>
+                        <span>Paid Ads Optimization &amp; ROAS Scaling</span>
+                      </div>
+                      <div className="specialty-item">
+                        <span className="specialty-icon icon-jen" aria-hidden="true">
+                          <IconCheck />
+                        </span>
+                        <span>Client Strategy &amp; Growth Execution</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="founder-actions">
+                    <Link href="/#contact" className="button button-white">
+                      Work with Jen <IconArrowUpRight />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </section>

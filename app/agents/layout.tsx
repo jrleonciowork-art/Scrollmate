@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Meet the Team & Agents | Scrollmate",
   description:
-    "Meet the leadership and creative operatives behind Scrollmate. Founded by Rob Leoncio, Founder & Managing Director.",
+    "Meet the leadership and creative operatives behind Scrollmate. Rob Leoncio (Founder & Managing Director) and Jen Leoncio (Digital Campaigns Director).",
   openGraph: {
     title: "Meet the Team & Agents | Scrollmate",
     description:

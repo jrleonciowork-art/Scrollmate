@@ -69,8 +69,9 @@ Package inclusions reflect the August 2026 company profile and should be confirm
 
 ## Leadership & team operatives
 
-The dedicated `/agents` (or `/team`) page spotlights the people and specialist divisions powering Scrollmate:
+The dedicated `/agents` (or `/team`) page spotlights the leadership and specialist divisions powering Scrollmate:
 - **Founder & Managing Director**: **Rob Leoncio** — Leading brand strategy, high-converting content architectures, paid funnel scaling, and creative direction.
+- **Digital Campaigns Director**: **Jen Leoncio** — Leading multichannel campaign architecture, performance marketing, audience targeting, and client growth.
 - **Operative Divisions**: Creative & Production, Community & Retention, and Growth & Analytics squads.
 
 ## Creative & production partner

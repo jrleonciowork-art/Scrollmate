@@ -181,9 +181,6 @@ export default function ResourcesPage() {
                 </Link>
               </div>
             </div>
-            <Link href="/agents" className="nav-link">
-              Agents
-            </Link>
             <Link href="/resources" className="nav-link nav-active">
               Resources
             </Link>
@@ -200,7 +197,6 @@ export default function ResourcesPage() {
               <div className="mobile-nav-section">
                 <span className="mobile-section-title">Pages</span>
                 <Link href="/" className="mobile-page-link">Home</Link>
-                <Link href="/agents" className="mobile-page-link">Agents</Link>
                 <Link href="/resources" className="mobile-page-link nav-active">Resources</Link>
               </div>
               <div className="mobile-nav-divider" />
@@ -439,7 +435,6 @@ export default function ResourcesPage() {
             <Link href="/#brands">Brands</Link>
             <Link href="/#partner">Partner</Link>
             <Link href="/#packages">Packages</Link>
-            <Link href="/agents">Agents</Link>
             <Link href="/resources">Resources</Link>
             <Link href="/#contact">Contact</Link>
           </nav>
