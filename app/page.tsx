@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
+import LoadingScreen from "./components/LoadingScreen";
 
 const brands = [
   {
@@ -129,25 +130,6 @@ function IconArrowDown({ className = "" }: { className?: string }) {
   );
 }
 
-function IconArrowRight({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
-    </svg>
-  );
-}
 
 function IconCheck({ className = "" }: { className?: string }) {
   return (
@@ -223,50 +205,87 @@ function IconChevronDown() {
   );
 }
 
+
 const steps = [
   {
     number: "01",
     phase: "Discovery & Blueprint",
     name: "Blueprint",
-    copy: "We align on your revenue goals, ideal audience, brand tone, and content pillars.",
-    tags: ["Audience Persona", "Brand Voice", "Content Pillars"],
+    lead: "Laying the strategic foundation for your digital storefront.",
+    copy: "We align on your commercial revenue targets, ideal buyer personas, brand voice, content pillars, and aesthetic visual grid before designing or shooting a single asset.",
+    deliverables: [
+      "Target Buyer Persona & Competitor Benchmark",
+      "Brand Voice, Tone & Messaging Matrix",
+      "Core Content Pillars & Hook Strategy",
+      "Aesthetic Grid & Moodboard Direction",
+    ],
+    tags: ["Audience Persona", "Brand Voice", "Content Pillars", "Grid Moodboard"],
     image: "/process-blueprint.webp",
-    glow: "rgba(168, 85, 247, 0.35)",
-    borderHover: "rgba(168, 85, 247, 0.55)",
+    color: "#a855f7",
+    glow: "rgba(168, 85, 247, 0.4)",
+    borderHover: "rgba(168, 85, 247, 0.65)",
     tagColor: "#d8b4fe",
+    statusText: "Strategic Initiation",
   },
   {
     number: "02",
     phase: "Creative Production",
     name: "Build",
-    copy: "We turn the blueprint into a structured content engine—copywriting, visual design, and video assets.",
-    tags: ["Feed Architecture", "Copy Library", "Short-form Reels"],
+    lead: "Transforming strategy into high-converting multimedia assets.",
+    copy: "We engineer a high-volume, structured content engine—combining thumb-stopping video reels, carousel graphics, persuasive direct-response copy, and polished branding.",
+    deliverables: [
+      "Custom Graphic Design & Carousels",
+      "Short-form Video & Reel Motion Editing",
+      "Direct-Response Copywriting & Captions",
+      "Batch Asset Staging & Review",
+    ],
+    tags: ["Feed Architecture", "Copy Library", "Short-form Reels", "Motion Graphics"],
     image: "/process-build.webp",
-    glow: "rgba(236, 72, 153, 0.35)",
-    borderHover: "rgba(236, 72, 153, 0.55)",
+    color: "#ec4899",
+    glow: "rgba(236, 72, 153, 0.4)",
+    borderHover: "rgba(236, 72, 153, 0.65)",
     tagColor: "#f472b6",
+    statusText: "Asset Manufacturing",
   },
   {
     number: "03",
     phase: "Deployment & Growth",
     name: "Launch",
-    copy: "We schedule, publish, engage community DMs/comments, and keep your feed active daily.",
-    tags: ["Smart Scheduling", "Community DMs", "Grid Management"],
+    lead: "Executing continuous distribution and active community nurture.",
+    copy: "We schedule, publish at peak algorithmic windows, engage your audience in comments and direct messages 24/7, and turn casual scrollers into loyal repeat customers.",
+    deliverables: [
+      "Peak-Time Multi-Channel Scheduling",
+      "24/7 Direct Message & Inbound Lead Nurture",
+      "Proactive Comment Engagement & Brand Hype",
+      "Story Sequences & Interactive Polls",
+    ],
+    tags: ["Smart Scheduling", "Community DMs", "Grid Management", "Active Nurture"],
     image: "/process-launch.webp",
-    glow: "rgba(249, 115, 22, 0.35)",
-    borderHover: "rgba(249, 115, 22, 0.55)",
+    color: "#f97316",
+    glow: "rgba(249, 115, 22, 0.4)",
+    borderHover: "rgba(249, 115, 22, 0.65)",
     tagColor: "#fb923c",
+    statusText: "Active Distribution",
   },
   {
     number: "04",
     phase: "Analytics & Scale",
     name: "Optimize",
-    copy: "We track performance metrics, run A/B iterations, and double down on top converting hooks.",
-    tags: ["Monthly Reporting", "A/B Hook Testing", "Paid Ad Scale"],
+    lead: "Iterative performance testing to double down on what converts.",
+    copy: "We track conversion KPIs, retention rates, and engagement data to run A/B hook tests, refine creative angles, and scale winning organic posts into profitable paid ad funnels.",
+    deliverables: [
+      "Monthly KPI & Executive Revenue Reports",
+      "A/B Hook & Creative Angle Iteration",
+      "Top-Performing Organic Asset Boosting",
+      "Paid Ad Funnel Scale & ROAS Tracking",
+    ],
+    tags: ["Monthly Reporting", "A/B Hook Testing", "Paid Ad Scale", "ROAS Growth"],
     image: "/process-optimize.webp",
-    glow: "rgba(34, 197, 94, 0.35)",
-    borderHover: "rgba(34, 197, 94, 0.55)",
+    color: "#22c55e",
+    glow: "rgba(34, 197, 94, 0.4)",
+    borderHover: "rgba(34, 197, 94, 0.65)",
     tagColor: "#4ade80",
+    statusText: "Compounding Growth",
   },
 ];
 
@@ -280,7 +299,9 @@ export default function Home() {
   const visualRef = useRef<HTMLDivElement>(null);
   const [activePulse, setActivePulse] = useState(0);
   const [isOverviewOpen, setIsOverviewOpen] = useState(false);
+  const systemTrackRef = useRef<HTMLElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -290,6 +311,28 @@ export default function Home() {
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const el = systemTrackRef.current;
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const startTrigger = windowHeight * 0.75;
+      const scrollableDistance = rect.height;
+
+      if (scrollableDistance <= 0) return;
+
+      const scrolled = startTrigger - rect.top;
+      const progress = Math.min(Math.max(scrolled / scrollableDistance, 0), 1);
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleVisualMove = (event: PointerEvent<HTMLDivElement>) => {
@@ -324,6 +367,8 @@ export default function Home() {
 
   return (
     <main>
+      <LoadingScreen />
+
       <header className="site-header">
         <div className="nav-wrap">
           <a className="brand-link" href="#home" aria-label="Scrollmate home">
@@ -544,136 +589,198 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="system-section section-pad" id="system">
-        <div className="system-ambient-glow" aria-hidden="true" />
-        <div className="section-shell">
-          <div className="section-heading two-col-heading system-heading">
-            <div>
-              <div className="eyebrow light"><span /> The Scrollmate system</div>
-              <h2>A clear path from<br /><em>idea to impact.</em></h2>
-            </div>
-            <div className="heading-copy">
-              <p className="lead" style={{ color: "#d5ccff" }}>
-                A proven four-stage framework designed to take the guesswork out of social media and deliver sustainable, compounding brand growth.
-              </p>
-              <p>
-                From foundational research to high-volume asset production, daily distribution, and iterative data refinement.
-              </p>
-            </div>
-          </div>
-
-          <div className="system-pipeline" aria-hidden="true">
-            <div className="pipeline-line" />
-            {steps.map((step) => (
-              <div className="pipeline-node" key={step.number}>
-                <span className="pipeline-dot" />
-                <span className="pipeline-label">Phase {step.number}</span>
+      {/* Unified Dark Realm Continuum: The System & Managed Brands */}
+      <div className="dark-realm-wrapper">
+        {/* Natural Vertical Scroll Pipeline & Animated Line Graph */}
+        <section className="system-section section-pad" id="system" ref={systemTrackRef}>
+          <div className="system-ambient-glow" aria-hidden="true" />
+          <div className="section-shell">
+            <div className="section-heading two-col-heading system-heading">
+              <div>
+                <div className="eyebrow light"><span /> The Scrollmate system</div>
+                <h2>A clear path from<br /><em>idea to impact.</em></h2>
               </div>
-            ))}
+              <div className="heading-copy">
+                <p className="lead" style={{ color: "#d5ccff" }}>
+                  A proven four-stage framework designed to take the guesswork out of social media and deliver sustainable, compounding brand growth.
+                </p>
+                <p>
+                  From foundational research to high-volume asset production, daily distribution, and iterative data refinement.
+                </p>
+              </div>
+            </div>
+
+            {/* Vertical Pipeline Container */}
+            <div className="system-timeline-pipeline">
+              {/* The Continuous Glowing Vertical Line Graph */}
+              <div className="timeline-vertical-line-track" aria-hidden="true">
+                <div className="timeline-vertical-line-bg" />
+                <div
+                  className="timeline-vertical-line-fill"
+                  style={{ height: `${scrollProgress * 100}%` }}
+                />
+                <div
+                  className="timeline-vertical-line-beacon"
+                  style={{ top: `${scrollProgress * 100}%` }}
+                />
+              </div>
+
+              {/* 4 Sequential Scroll Phase Cards (Rise & animate up as you scroll) */}
+              <div className="system-phases-stack">
+                {steps.map((step, idx) => (
+                  <article
+                    key={step.number}
+                    className="system-phase-card"
+                    style={{
+                      "--phase-color": step.color,
+                      "--phase-glow": step.glow,
+                      "--phase-border": step.borderHover,
+                      "--phase-tag": step.tagColor,
+                    } as React.CSSProperties}
+                  >
+                    <div className="phase-card-glow" aria-hidden="true" />
+
+                    {/* Top Node Connector on the Line Graph */}
+                    <div className="phase-node-header">
+                      <div className="phase-node-marker">
+                        <span className="phase-node-ring" />
+                        <span className="phase-node-number">{step.number}</span>
+                      </div>
+                      <div className="phase-node-meta">
+                        <span className="phase-node-badge">PHASE {step.number} {"//"} 04</span>
+                        <span className="phase-node-status">{step.statusText}</span>
+                      </div>
+                    </div>
+
+                    <div className="phase-card-grid">
+                      {/* Left/Dossier Column */}
+                      <div className="phase-dossier">
+                        <div className="phase-title-group">
+                          <span className="phase-sub-title">{step.phase}</span>
+                          <h3 className="phase-heading">{step.name}</h3>
+                          <p className="phase-lead">{step.lead}</p>
+                        </div>
+
+                        <p className="phase-copy">{step.copy}</p>
+
+                        <div className="phase-deliverables-box">
+                          <h4 className="deliverables-box-title">Key Phase Deliverables</h4>
+                          <ul className="deliverables-box-list">
+                            {step.deliverables.map((item) => (
+                              <li key={item}>
+                                <span className="deliverable-check-icon" aria-hidden="true">
+                                  <IconCheck />
+                                </span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className="phase-tag-row">
+                          {step.tags.map((tag) => (
+                            <span key={tag} className="phase-tag-pill">{tag}</span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Right/Cinema Column */}
+                      <div className="phase-cinema-wrap">
+                        <div className="phase-cinema-frame">
+                          <Image
+                            src={step.image}
+                            width={720}
+                            height={480}
+                            alt={`${step.name} stage visual`}
+                            className="phase-cinema-img"
+                          />
+                          <div className="phase-cinema-overlay" />
+                          <div className="phase-cinema-hud-top">
+                            <span>STAGE 0{idx + 1} {"//"} OPERATIVE HUD</span>
+                          </div>
+                          <div className="phase-cinema-hud-bottom">
+                            <strong>{step.name} Focus</strong>
+                            <span>{step.lead}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
           </div>
+        </section>
 
-          <div className="steps-grid">
-            {steps.map((step) => (
-              <article
-                className="step-card"
-                key={step.number}
-                style={{
-                  "--step-glow": step.glow,
-                  "--step-border": step.borderHover,
-                  "--step-tag": step.tagColor,
-                } as React.CSSProperties}
-              >
-                <div className="step-card-glow" aria-hidden="true" />
-                <div className="step-card-top">
-                  <span className="step-number-badge">{step.number}</span>
-                  <div className="step-arrow-circle" aria-hidden="true">
-                    <IconArrowRight />
-                  </div>
-                </div>
-
-                <div className="step-media-wrap">
-                  <Image
-                    src={step.image}
-                    width={600}
-                    height={400}
-                    alt={`${step.name} stage visual`}
-                    className="step-media-img"
-                  />
-                  <div className="step-media-overlay" />
-                </div>
-
-                <div className="step-card-body">
-                  <span className="step-phase-label">{step.phase}</span>
-                  <h3>{step.name}</h3>
-                  <p>{step.copy}</p>
-                  <div className="step-tag-stack">
-                    {step.tags.map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            ))}
+        {/* Creative Kinetic Transition Conduit */}
+        <div className="system-brands-conduit" aria-hidden="true">
+          <div className="conduit-stream-line" />
+          <div className="conduit-core-node">
+            <span className="conduit-ring-pulse" />
+            <span className="conduit-core-dot" />
+          </div>
+          <div className="conduit-stream-label">
+            <span className="conduit-sparkle">✦</span>
+            <span>SYSTEM IN MOTION // MANAGED BRANDS</span>
+            <span className="conduit-sparkle">✦</span>
           </div>
         </div>
-      </section>
 
-      <section className="brands-section section-pad" id="brands">
-        <div className="brands-transition-glow" aria-hidden="true" />
-        <div className="brands-divider-line" aria-hidden="true" />
-        <div className="brands-ambient-glow" aria-hidden="true" />
-        <div className="brands-mesh-glow brands-mesh-one" aria-hidden="true" />
-        <div className="brands-mesh-glow brands-mesh-two" aria-hidden="true" />
-        <div className="section-shell">
-          <div className="section-heading centered-heading">
-            <div className="eyebrow light"><span /> Brands we manage</div>
-            <h2>Different stories.<br />One thoughtful <em>strategy.</em></h2>
-            <p>We show up as an extension of every team—and make every brand feel unmistakably its own.</p>
-          </div>
-          <div className="brands-grid">
-            {brands.map((brand, index) => (
-              <article
-                className="brand-card"
-                key={brand.name}
-                style={{
-                  "--brand-glow": brand.accent,
-                  "--brand-border": brand.borderHover,
-                  "--brand-tag": brand.tagColor,
-                } as React.CSSProperties}
-              >
-                <div className="brand-card-glow" aria-hidden="true" />
-                <div className="brand-card-top">
-                  <span className="brand-index">0{index + 1}</span>
-                  <span className="brand-status"><span className="status-indicator" />Active</span>
-                </div>
-                <div className="brand-image-wrap">
-                  <Image
-                    src={brand.image}
-                    width={437}
-                    height={437}
-                    alt={`${brand.name} logo`}
-                    className="brand-image"
-                  />
-                  <div className="brand-image-overlay" />
-                </div>
-                <div className="brand-card-copy">
-                  <span className="brand-category">{brand.category}</span>
-                  <div className="brand-title-row">
-                    <h3>{brand.name}</h3>
-                    <span className="brand-arrow" aria-hidden="true"><IconArrowUpRight /></span>
+        <section className="brands-section section-pad" id="brands">
+          <div className="brands-ambient-glow" aria-hidden="true" />
+          <div className="brands-mesh-glow brands-mesh-one" aria-hidden="true" />
+          <div className="brands-mesh-glow brands-mesh-two" aria-hidden="true" />
+          <div className="section-shell">
+            <div className="section-heading centered-heading">
+              <div className="eyebrow light"><span /> Brands we manage</div>
+              <h2>Different stories.<br />One thoughtful <em>strategy.</em></h2>
+              <p>We show up as an extension of every team—and make every brand feel unmistakably its own.</p>
+            </div>
+            <div className="brands-grid">
+              {brands.map((brand, index) => (
+                <article
+                  className="brand-card"
+                  key={brand.name}
+                  style={{
+                    "--brand-glow": brand.accent,
+                    "--brand-border": brand.borderHover,
+                    "--brand-tag": brand.tagColor,
+                  } as React.CSSProperties}
+                >
+                  <div className="brand-card-glow" aria-hidden="true" />
+                  <div className="brand-card-top">
+                    <span className="brand-index">0{index + 1}</span>
+                    <span className="brand-status"><span className="status-indicator" />Active</span>
                   </div>
-                  <p className="brand-highlight">{brand.highlight}</p>
-                  <div className="brand-tag-list">
-                    {brand.tags.map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
+                  <div className="brand-image-wrap">
+                    <Image
+                      src={brand.image}
+                      width={437}
+                      height={437}
+                      alt={`${brand.name} logo`}
+                      className="brand-image"
+                    />
+                    <div className="brand-image-overlay" />
                   </div>
-                </div>
-              </article>
-            ))}
+                  <div className="brand-card-copy">
+                    <span className="brand-category">{brand.category}</span>
+                    <div className="brand-title-row">
+                      <h3>{brand.name}</h3>
+                      <span className="brand-arrow" aria-hidden="true"><IconArrowUpRight /></span>
+                    </div>
+                    <p className="brand-highlight">{brand.highlight}</p>
+                    <div className="brand-tag-list">
+                      {brand.tags.map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       <section className="partner-section section-pad" id="partner">
         <div className="section-shell">
