@@ -1,0 +1,207 @@
+{
+  "hero": {
+    "eyebrow": "Social media management that feels like magic",
+    "headline": "Stop scrolling by.<br />Start standing out.",
+    "lead": "Scrollmate helps growing brands win every scroll through content, community, and strategy.",
+    "marquee": [
+      "GROWTH THAT MATTERS",
+      "AUTHENTIC CONNECTIONS",
+      "CONTENT THAT STICKS",
+      "MORE CONVERSIONS",
+      "EFFORTLESS ENGAGEMENT"
+    ]
+  },
+  "steps": [
+    {
+      "number": "01",
+      "phase": "Discovery & Blueprint",
+      "name": "Blueprint",
+      "lead": "Laying the strategic foundation for your digital storefront.",
+      "copy": "We align on your commercial revenue targets, ideal buyer personas, brand voice, content pillars, and aesthetic visual grid before designing or shooting a single asset.",
+      "deliverables": [
+        "Target Buyer Persona & Competitor Benchmark",
+        "Brand Voice, Tone & Messaging Matrix",
+        "Core Content Pillars & Hook Strategy",
+        "Aesthetic Grid & Moodboard Direction"
+      ],
+      "tags": ["Audience Persona", "Brand Voice", "Content Pillars", "Grid Moodboard"],
+      "image": "/process-blueprint.webp",
+      "color": "#ffffff",
+      "glow": "rgba(255, 255, 255, 0.18)",
+      "borderHover": "rgba(255, 255, 255, 0.45)",
+      "tagColor": "#ffffff",
+      "statusText": "Strategic Initiation"
+    },
+    {
+      "number": "02",
+      "phase": "Creative Production",
+      "name": "Build",
+      "lead": "Transforming strategy into high-converting multimedia assets.",
+      "copy": "We engineer a high-volume, structured content engine—combining thumb-stopping video reels, carousel graphics, persuasive direct-response copy, and polished branding.",
+      "deliverables": [
+        "Custom Graphic Design & Carousels",
+        "Short-form Video & Reel Motion Editing",
+        "Direct-Response Copywriting & Captions",
+        "Batch Asset Staging & Review"
+      ],
+      "tags": ["Feed Architecture", "Copy Library", "Short-form Reels", "Motion Graphics"],
+      "image": "/process-build.webp",
+      "color": "#ffffff",
+      "glow": "rgba(255, 255, 255, 0.18)",
+      "borderHover": "rgba(255, 255, 255, 0.45)",
+      "tagColor": "#ffffff",
+      "statusText": "Asset Manufacturing"
+    },
+    {
+      "number": "03",
+      "phase": "Deployment & Growth",
+      "name": "Launch",
+      "lead": "Executing continuous distribution and active community nurture.",
+      "copy": "We schedule, publish at peak algorithmic windows, engage your audience in comments and direct messages 24/7, and turn casual scrollers into loyal repeat customers.",
+      "deliverables": [
+        "Peak-Time Multi-Channel Scheduling",
+        "24/7 Direct Message & Inbound Lead Nurture",
+        "Proactive Comment Engagement & Brand Hype",
+        "Story Sequences & Interactive Polls"
+      ],
+      "tags": ["Smart Scheduling", "Community DMs", "Grid Management", "Active Nurture"],
+      "image": "/process-launch.webp",
+      "color": "#ffffff",
+      "glow": "rgba(255, 255, 255, 0.18)",
+      "borderHover": "rgba(255, 255, 255, 0.45)",
+      "tagColor": "#ffffff",
+      "statusText": "Active Distribution"
+    },
+    {
+      "number": "04",
+      "phase": "Analytics & Scale",
+      "name": "Optimize",
+      "lead": "Iterative performance testing to double down on what converts.",
+      "copy": "We track conversion KPIs, retention rates, and engagement data to run A/B hook tests, refine creative angles, and scale winning organic posts into profitable paid ad funnels.",
+      "deliverables": [
+        "Monthly KPI & Executive Revenue Reports",
+        "A/B Hook & Creative Angle Iteration",
+        "Top-Performing Organic Asset Boosting",
+        "Paid Ad Funnel Scale & ROAS Tracking"
+      ],
+      "tags": ["Monthly Reporting", "A/B Hook Testing", "Paid Ad Scale", "ROAS Growth"],
+      "image": "/process-optimize.webp",
+      "color": "#ffffff",
+      "glow": "rgba(255, 255, 255, 0.18)",
+      "borderHover": "rgba(255, 255, 255, 0.45)",
+      "tagColor": "#ffffff",
+      "statusText": "Compounding Growth"
+    }
+  ],
+  "brands": [
+    {
+      "name": "Authentic MNL",
+      "category": "Fashion & Lifestyle",
+      "status": "Ongoing",
+      "highlight": "Curated aesthetic & organic engagement",
+      "tags": ["Grid Design", "Copywriting", "SEO"],
+      "image": "/authentic-mnl.webp",
+      "accent": "rgba(226, 180, 72, 0.35)",
+      "borderHover": "rgba(226, 180, 72, 0.55)",
+      "tagColor": "#f6d582"
+    },
+    {
+      "name": "Cuisineer!",
+      "category": "Food & Community",
+      "status": "Ongoing",
+      "highlight": "Thumb-stopping food reels & community hype",
+      "tags": ["Short-form Video", "Community", "Growth"],
+      "image": "/cuisineer.webp",
+      "accent": "rgba(215, 60, 45, 0.35)",
+      "borderHover": "rgba(230, 80, 60, 0.55)",
+      "tagColor": "#ff9d8c"
+    },
+    {
+      "name": "Gunita: Print & Crafts",
+      "category": "Prints & Crafts",
+      "status": "Ongoing",
+      "highlight": "Product showcases & high-converting ads",
+      "tags": ["Ad Strategy", "Visual Assets", "A/B Testing"],
+      "image": "/sintra-board.webp",
+      "accent": "rgba(235, 110, 145, 0.35)",
+      "borderHover": "rgba(245, 130, 165, 0.55)",
+      "tagColor": "#fbcfe8"
+    },
+    {
+      "name": "Empleo",
+      "category": "Careers & Employment",
+      "status": "Managed",
+      "highlight": "Brand positioning & modern audience reach",
+      "tags": ["Strategy", "Audience Growth", "Branding"],
+      "image": "/empleo.png",
+      "accent": "rgba(44, 130, 241, 0.35)",
+      "borderHover": "rgba(60, 145, 255, 0.55)",
+      "tagColor": "#93c5fd"
+    }
+  ],
+  "partner": {
+    "name": "Hero Editor Studios",
+    "lead": "A creative multimedia and production studio based in the Philippines that specializes in graphic design, branding, video animation, and event media coverage.",
+    "tags": [
+      "+ Graphic Design",
+      "+ Branding",
+      "+ Video Animation",
+      "+ Event Media Coverage"
+    ],
+    "image": "/hero-editor-studios.png",
+    "badge": "Creative & Production Partner",
+    "ctaLabel": "Work with us",
+    "ctaHref": "#contact"
+  },
+  "packages": [
+    {
+      "tier": "Tier 01",
+      "tierLabel": "Organic Foundation",
+      "name": "The Optimizer",
+      "description": "For brands that need a stronger, more consistent social presence and storefront credibility.",
+      "features": [
+        "Profile uplift & bio SEO optimization",
+        "Content scheduling & copywriting",
+        "Aesthetic grid direction & feed planning",
+        "Community management & proactive response",
+        "Monthly comprehensive performance report"
+      ],
+      "featured": false
+    },
+    {
+      "tier": "Tier 02",
+      "tierLabel": "Content Engine",
+      "name": "The Creator",
+      "description": "For brands ready to turn strategy into high-volume, thumb-stopping creative assets.",
+      "features": [
+        "Everything included in The Optimizer",
+        "Custom visual asset creation & carousel design",
+        "Short-form video & reel editing (with hooks)",
+        "Monthly content strategy plan & roadmap",
+        "Priority creative revision rounds"
+      ],
+      "featured": true
+    },
+    {
+      "tier": "Tier 03",
+      "tierLabel": "Growth & Paid Scale",
+      "name": "The Accelerator",
+      "description": "For growing brands ready to pair high-impact organic content with paid acquisition.",
+      "features": [
+        "Everything included in The Creator",
+        "Paid ad campaign strategy & setup",
+        "Creative & copy A/B hook testing",
+        "Full-funnel campaign management & optimization",
+        "Dedicated ROAS scaling & growth reporting"
+      ],
+      "featured": false
+    }
+  ],
+  "contact": {
+    "email": "Scrollmate.business@gmail.com",
+    "facebook": "Scrollmate",
+    "heading": "Ready to put your brand on the map?",
+    "subheading": "Tell us where your brand is now—and where you want it to go. We'll reply with the smartest next step.",
+    "promises": ["Friendly strategy", "Clear deliverables", "Built for growth"]
+  }
+}

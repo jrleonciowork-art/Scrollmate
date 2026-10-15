@@ -3,92 +3,8 @@
 import Image from "next/image";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import LoadingScreen from "./components/LoadingScreen";
+import initialSiteData from "@/data/site-data.json";
 
-const brands = [
-  {
-    name: "Authentic MNL",
-    category: "Fashion & Lifestyle",
-    highlight: "Curated aesthetic & organic engagement",
-    tags: ["Grid Design", "Copywriting", "SEO"],
-    image: "/authentic-mnl.webp",
-    accent: "rgba(226, 180, 72, 0.35)",
-    borderHover: "rgba(226, 180, 72, 0.55)",
-    tagColor: "#f6d582",
-  },
-  {
-    name: "Cuisineer!",
-    category: "Food & Community",
-    highlight: "Thumb-stopping food reels & community hype",
-    tags: ["Short-form Video", "Community", "Growth"],
-    image: "/cuisineer.webp",
-    accent: "rgba(215, 60, 45, 0.35)",
-    borderHover: "rgba(230, 80, 60, 0.55)",
-    tagColor: "#ff9d8c",
-  },
-  {
-    name: "Gunita: Print & Crafts",
-    category: "Prints & Crafts",
-    highlight: "Product showcases & high-converting ads",
-    tags: ["Ad Strategy", "Visual Assets", "A/B Testing"],
-    image: "/sintra-board.webp",
-    accent: "rgba(235, 110, 145, 0.35)",
-    borderHover: "rgba(245, 130, 165, 0.55)",
-    tagColor: "#fbcfe8",
-  },
-  {
-    name: "Empleo",
-    category: "Careers & Employment",
-    highlight: "Brand positioning & modern audience reach",
-    tags: ["Strategy", "Audience Growth", "Branding"],
-    image: "/empleo.png",
-    accent: "rgba(44, 130, 241, 0.35)",
-    borderHover: "rgba(60, 145, 255, 0.55)",
-    tagColor: "#93c5fd",
-  },
-];
-
-const packages = [
-  {
-    tier: "Tier 01",
-    tierLabel: "Organic Foundation",
-    name: "The Optimizer",
-    description: "For brands that need a stronger, more consistent social presence and storefront credibility.",
-    features: [
-      "Profile uplift & bio SEO optimization",
-      "Content scheduling & copywriting",
-      "Aesthetic grid direction & feed planning",
-      "Community management & proactive response",
-      "Monthly comprehensive performance report",
-    ],
-  },
-  {
-    tier: "Tier 02",
-    tierLabel: "Content Engine",
-    name: "The Creator",
-    description: "For brands ready to turn strategy into high-volume, thumb-stopping creative assets.",
-    features: [
-      "Everything included in The Optimizer",
-      "Custom visual asset creation & carousel design",
-      "Short-form video & reel editing (with hooks)",
-      "Monthly content strategy plan & roadmap",
-      "Priority creative revision rounds",
-    ],
-    featured: true,
-  },
-  {
-    tier: "Tier 03",
-    tierLabel: "Growth & Paid Scale",
-    name: "The Accelerator",
-    description: "For growing brands ready to pair high-impact organic content with paid acquisition.",
-    features: [
-      "Everything included in The Creator",
-      "Paid ad campaign strategy & setup",
-      "Creative & copy A/B hook testing",
-      "Full-funnel campaign management & optimization",
-      "Dedicated ROAS scaling & growth reporting",
-    ],
-  },
-];
 
 function IconArrowUpRight({ className = "" }: { className?: string }) {
   return (
@@ -206,89 +122,6 @@ function IconChevronDown() {
 }
 
 
-const steps = [
-  {
-    number: "01",
-    phase: "Discovery & Blueprint",
-    name: "Blueprint",
-    lead: "Laying the strategic foundation for your digital storefront.",
-    copy: "We align on your commercial revenue targets, ideal buyer personas, brand voice, content pillars, and aesthetic visual grid before designing or shooting a single asset.",
-    deliverables: [
-      "Target Buyer Persona & Competitor Benchmark",
-      "Brand Voice, Tone & Messaging Matrix",
-      "Core Content Pillars & Hook Strategy",
-      "Aesthetic Grid & Moodboard Direction",
-    ],
-    tags: ["Audience Persona", "Brand Voice", "Content Pillars", "Grid Moodboard"],
-    image: "/process-blueprint.webp",
-    color: "#a855f7",
-    glow: "rgba(168, 85, 247, 0.4)",
-    borderHover: "rgba(168, 85, 247, 0.65)",
-    tagColor: "#d8b4fe",
-    statusText: "Strategic Initiation",
-  },
-  {
-    number: "02",
-    phase: "Creative Production",
-    name: "Build",
-    lead: "Transforming strategy into high-converting multimedia assets.",
-    copy: "We engineer a high-volume, structured content engine—combining thumb-stopping video reels, carousel graphics, persuasive direct-response copy, and polished branding.",
-    deliverables: [
-      "Custom Graphic Design & Carousels",
-      "Short-form Video & Reel Motion Editing",
-      "Direct-Response Copywriting & Captions",
-      "Batch Asset Staging & Review",
-    ],
-    tags: ["Feed Architecture", "Copy Library", "Short-form Reels", "Motion Graphics"],
-    image: "/process-build.webp",
-    color: "#ec4899",
-    glow: "rgba(236, 72, 153, 0.4)",
-    borderHover: "rgba(236, 72, 153, 0.65)",
-    tagColor: "#f472b6",
-    statusText: "Asset Manufacturing",
-  },
-  {
-    number: "03",
-    phase: "Deployment & Growth",
-    name: "Launch",
-    lead: "Executing continuous distribution and active community nurture.",
-    copy: "We schedule, publish at peak algorithmic windows, engage your audience in comments and direct messages 24/7, and turn casual scrollers into loyal repeat customers.",
-    deliverables: [
-      "Peak-Time Multi-Channel Scheduling",
-      "24/7 Direct Message & Inbound Lead Nurture",
-      "Proactive Comment Engagement & Brand Hype",
-      "Story Sequences & Interactive Polls",
-    ],
-    tags: ["Smart Scheduling", "Community DMs", "Grid Management", "Active Nurture"],
-    image: "/process-launch.webp",
-    color: "#f97316",
-    glow: "rgba(249, 115, 22, 0.4)",
-    borderHover: "rgba(249, 115, 22, 0.65)",
-    tagColor: "#fb923c",
-    statusText: "Active Distribution",
-  },
-  {
-    number: "04",
-    phase: "Analytics & Scale",
-    name: "Optimize",
-    lead: "Iterative performance testing to double down on what converts.",
-    copy: "We track conversion KPIs, retention rates, and engagement data to run A/B hook tests, refine creative angles, and scale winning organic posts into profitable paid ad funnels.",
-    deliverables: [
-      "Monthly KPI & Executive Revenue Reports",
-      "A/B Hook & Creative Angle Iteration",
-      "Top-Performing Organic Asset Boosting",
-      "Paid Ad Funnel Scale & ROAS Tracking",
-    ],
-    tags: ["Monthly Reporting", "A/B Hook Testing", "Paid Ad Scale", "ROAS Growth"],
-    image: "/process-optimize.webp",
-    color: "#22c55e",
-    glow: "rgba(34, 197, 94, 0.4)",
-    borderHover: "rgba(34, 197, 94, 0.65)",
-    tagColor: "#4ade80",
-    statusText: "Compounding Growth",
-  },
-];
-
 const pulseItems = [
   { day: "MON", title: "Brand story", className: "post-one", hasPlay: false },
   { day: "WED", title: "Reel edit", className: "post-two", hasPlay: true },
@@ -302,6 +135,29 @@ export default function Home() {
   const systemTrackRef = useRef<HTMLElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [siteContent, setSiteContent] = useState(initialSiteData);
+
+  useEffect(() => {
+    fetch("/api/admin/content")
+      .then((res) => {
+        if (res.ok) return res.json();
+        throw new Error("Failed to fetch");
+      })
+      .then((json) => {
+        if (json && json.brands && json.packages && json.steps) {
+          setSiteContent(json);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const brands = siteContent.brands;
+  const packages = siteContent.packages;
+  const steps = siteContent.steps;
+  const partner = siteContent.partner;
+  const hero = siteContent.hero;
+  const contact = siteContent.contact;
+
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -480,12 +336,9 @@ export default function Home() {
         <div className="hero-glow hero-glow-two" aria-hidden="true" />
         <div className="section-shell hero-grid">
           <div className="hero-copy">
-            <div className="eyebrow light"><span /> Social media management, made personal</div>
+            <div className="eyebrow light"><span /> {hero.eyebrow}</div>
             <h1>Your soulmate for every <em>scroll</em> you take.</h1>
-            <p>
-              We help brands grow through content that connects, communities that care,
-              and strategies built to convert.
-            </p>
+            <p>{hero.lead}</p>
             <div className="hero-actions">
               <a className="button button-light" href="#contact">Get a quote <IconArrowUpRight /></a>
               <a className="button button-ghost" href="#packages">View packages <IconArrowDown /></a>
@@ -542,7 +395,18 @@ export default function Home() {
           </div>
         </div>
         <div className="hero-marquee" aria-hidden="true">
-          <div>STRATEGY <b>+</b> CONTENT <b>+</b> COMMUNITY <b>+</b> GROWTH <b>+</b> STRATEGY <b>+</b> CONTENT <b>+</b> COMMUNITY <b>+</b> GROWTH</div>
+          <div>
+            {(hero.marquee || []).map((word, i) => (
+              <span key={i}>
+                {word} <b>+</b>{" "}
+              </span>
+            ))}
+            {(hero.marquee || []).map((word, i) => (
+              <span key={`dup-${i}`}>
+                {word} <b>+</b>{" "}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -750,7 +614,16 @@ export default function Home() {
                   <div className="brand-card-glow" aria-hidden="true" />
                   <div className="brand-card-top">
                     <span className="brand-index">0{index + 1}</span>
-                    <span className="brand-status"><span className="status-indicator" />Active</span>
+                    <span
+                      className={`brand-status ${
+                        (brand.status || "").toLowerCase() === "managed"
+                          ? "status-managed"
+                          : "status-ongoing"
+                      }`}
+                    >
+                      <span className="status-indicator" />
+                      {(brand.status || "").toLowerCase() === "managed" ? "Managed" : "Ongoing"}
+                    </span>
                   </div>
                   <div className="brand-image-wrap">
                     <Image
@@ -791,33 +664,32 @@ export default function Home() {
               <div className="partner-eyebrow">
                 <span /> Meet our partner
               </div>
-              <h2>Hero Editor Studios</h2>
+              <h2>{partner.name}</h2>
               <p className="partner-lead">
-                A creative multimedia and production studio based in the Philippines that specializes in graphic design, branding, video animation, and event media coverage.
+                {partner.lead}
               </p>
-              <div className="partner-tags" aria-label="Hero Editor Studios specializations">
-                <span>+ Graphic Design</span>
-                <span>+ Branding</span>
-                <span>+ Video Animation</span>
-                <span>+ Event Media Coverage</span>
+              <div className="partner-tags" aria-label={`${partner.name} specializations`}>
+                {(partner.tags || []).map((tag) => (
+                  <span key={tag}>{tag.startsWith("+") ? tag : `+ ${tag}`}</span>
+                ))}
               </div>
               <div className="partner-actions">
-                <a className="button button-light" href="#contact">
-                  Work with us <IconArrowUpRight />
+                <a className="button button-light" href={partner.ctaHref || "#contact"}>
+                  {partner.ctaLabel || "Work with us"} <IconArrowUpRight />
                 </a>
               </div>
             </div>
             <div className="partner-visual">
               <div className="partner-logo-box">
                 <Image
-                  src="/hero-editor-studios.png"
+                  src={partner.image || "/hero-editor-studios.png"}
                   width={440}
                   height={440}
-                  alt="Hero Editor Studios logo"
+                  alt={`${partner.name} logo`}
                   className="partner-logo-img"
                 />
                 <div className="partner-badge">
-                  <span>Creative &amp; Production Partner</span>
+                  <span>{partner.badge || "Creative & Production Partner"}</span>
                 </div>
               </div>
             </div>
@@ -895,24 +767,26 @@ export default function Home() {
         <div className="section-shell contact-grid">
           <div className="contact-copy">
             <div className="eyebrow light"><span /> Contact us</div>
-            <h2>Ready to put your brand on the <em>map?</em></h2>
-            <p>Tell us where your brand is now—and where you want it to go. We&apos;ll reply with the smartest next step.</p>
-            <a className="email-link" href="mailto:Scrollmate.business@gmail.com">
+            <h2>{contact.heading || "Ready to put your brand on the map?"}</h2>
+            <p>{contact.subheading || "Tell us where your brand is now—and where you want it to go. We'll reply with the smartest next step."}</p>
+            <a className="email-link" href={`mailto:${contact.email}`}>
               <span aria-hidden="true">@</span>
-              <div><small>Email us directly</small>Scrollmate.business@gmail.com</div>
+              <div><small>Email us directly</small>{contact.email}</div>
             </a>
             <div className="contact-promise">
-              <span>Friendly strategy</span><span>Clear deliverables</span><span>Built for growth</span>
+              {(contact.promises || ["Friendly strategy", "Clear deliverables", "Built for growth"]).map((p) => (
+                <span key={p}>{p}</span>
+              ))}
             </div>
           </div>
           <div className="contact-details" aria-label="Scrollmate contact details">
             <div className="contact-detail-row">
               <span>Email</span>
-              <a href="mailto:Scrollmate.business@gmail.com">Scrollmate.business@gmail.com</a>
+              <a href={`mailto:${contact.email}`}>{contact.email}</a>
             </div>
             <div className="contact-detail-row">
               <span>Facebook</span>
-              <p>Scrollmate</p>
+              <p>{contact.facebook}</p>
             </div>
           </div>
         </div>

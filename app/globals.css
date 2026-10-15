@@ -532,26 +532,26 @@ h1 em, h2 em { color: var(--purple-300); font-style: normal; }
   position: relative;
   overflow: hidden;
   background: linear-gradient(150deg, rgba(26, 14, 68, 0.9) 0%, rgba(12, 5, 34, 0.98) 100%);
-  border: 1px solid var(--phase-border, rgba(168, 85, 247, 0.35));
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 32px;
   padding: 34px 30px;
-  box-shadow: 0 24px 60px rgba(5, 2, 20, 0.5), 0 0 30px var(--phase-glow, rgba(168, 85, 247, 0.18));
+  box-shadow: 0 24px 60px rgba(5, 2, 20, 0.5), 0 0 30px rgba(255, 255, 255, 0.08);
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease, border-color 0.4s ease;
   backdrop-filter: blur(16px);
 }
 .system-phase-card:hover {
   transform: translateY(-6px);
-  border-color: var(--phase-color, #a855f7);
-  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 45px var(--phase-glow, rgba(168, 85, 247, 0.35));
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 45px rgba(255, 255, 255, 0.18);
 }
 .phase-card-glow {
   position: absolute;
   top: -80px;
   right: -80px;
-  width: 320px;
-  height: 320px;
+  width: 340px;
+  height: 340px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--phase-glow, rgba(168, 85, 247, 0.28)) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 40%, transparent 70%);
   filter: blur(45px);
   pointer-events: none;
 }
@@ -574,15 +574,15 @@ h1 em, h2 em { color: var(--purple-300); font-style: normal; }
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--phase-color, #a855f7);
-  box-shadow: 0 0 12px var(--phase-color, #a855f7);
+  background: #ffffff;
+  box-shadow: 0 0 12px #ffffff;
   animation: status-pulse 2s infinite;
 }
 .phase-node-number {
   font-size: 13px;
   font-weight: 900;
   letter-spacing: 0.12em;
-  color: var(--phase-tag, #d8b4fe);
+  color: #ffffff;
 }
 .phase-node-meta {
   display: flex;
@@ -594,9 +594,9 @@ h1 em, h2 em { color: var(--purple-300); font-style: normal; }
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--phase-color, #c4b7ff);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 4px 12px;
   border-radius: 999px;
 }
@@ -605,11 +605,11 @@ h1 em, h2 em { color: var(--purple-300); font-style: normal; }
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.75);
   background: rgba(255, 255, 255, 0.06);
   padding: 4px 10px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* 2-Column Phase Card Grid */
@@ -642,7 +642,7 @@ h1 em, h2 em { color: var(--purple-300); font-style: normal; }
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--phase-tag, #d8b4fe);
+  color: rgba(255, 255, 255, 0.75);
 }
 .phase-heading {
   font-size: clamp(32px, 4.5vw, 48px);
@@ -706,8 +706,8 @@ h1 em, h2 em { color: var(--purple-300); font-style: normal; }
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--phase-color, #c4b7ff);
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
   display: grid;
   place-items: center;
   flex-shrink: 0;
@@ -726,9 +726,9 @@ h1 em, h2 em { color: var(--purple-300); font-style: normal; }
 .phase-tag-pill {
   font-size: 10.5px;
   font-weight: 700;
-  color: var(--phase-tag, #d8b4fe);
+  color: #ffffff;
   background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   padding: 4px 10px;
   border-radius: 999px;
 }
@@ -748,7 +748,7 @@ h1 em, h2 em { color: var(--purple-300); font-style: normal; }
   overflow: hidden;
   background: #080417;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 35px var(--phase-glow, rgba(168, 85, 247, 0.25));
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 255, 255, 0.08);
 }
 .phase-cinema-img {
   width: 100%;
@@ -1014,19 +1014,35 @@ h1 em, h2 em { color: var(--purple-300); font-style: normal; }
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: .08em;
-  color: #4ade80;
-  background: rgba(34, 197, 94, 0.12);
-  border: 1px solid rgba(34, 197, 94, 0.25);
   padding: 3px 9px;
   border-radius: 999px;
+  transition: all .25s ease;
+}
+.brand-status.status-ongoing {
+  color: #4ade80;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.28);
+}
+.brand-status.status-ongoing .status-indicator {
+  background: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.35);
+  animation: status-pulse 2s infinite;
+}
+.brand-status.status-managed {
+  color: #c4b5fd;
+  background: rgba(168, 85, 247, 0.14);
+  border: 1px solid rgba(168, 85, 247, 0.32);
+}
+.brand-status.status-managed .status-indicator {
+  background: #c084fc;
+  box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.35);
+  animation: none;
 }
 .status-indicator {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #22c55e;
-  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.35);
-  animation: status-pulse 2s infinite;
+  background: currentColor;
 }
 .brand-image-wrap {
   position: relative;
