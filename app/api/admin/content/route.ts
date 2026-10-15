@@ -2,6 +2,9 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { getSiteData, saveSiteData, SiteData } from "@/lib/site-data";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const COOKIE_NAME = "scrollmate_admin_session";
 const SESSION_VALUE = "scrollmate_auth_token_verified_2026";
 
@@ -31,16 +34,22 @@ export async function POST(request: Request) {
       );
     }
 
-    const saved = saveSiteData(body);
+    const result = await saveSiteData(body);
 
-    if (!saved) {
+    if (!result.success) {
       return NextResponse.json(
-        { success: false, error: "Failed to persist site data file" },
+        { success: false, error: "Failed to persist site data" },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({ success: true, data: body });
+    return NextResponse.json({
+      success: true,
+      data: body,
+      persistedToGitHub: result.persistedToGitHub,
+      persistedToDisk: result.persistedToDisk,
+      persistedToTmp: result.persistedToTmp,
+    });
   } catch (error) {
     console.error("Error in POST /api/admin/content:", error);
     return NextResponse.json(

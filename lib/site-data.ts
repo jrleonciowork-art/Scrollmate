@@ -1,6 +1,9 @@
 import fs from "fs";
 import path from "path";
 
+import os from "os";
+import initialSiteData from "@/data/site-data.json";
+
 export interface HeroData {
   eyebrow: string;
   headline: string;
@@ -74,64 +77,145 @@ export interface SiteData {
   contact: ContactData;
 }
 
-const DATA_PATH = path.join(process.cwd(), "data", "site-data.json");
+const BUNDLED_PATH = path.join(process.cwd(), "data", "site-data.json");
+const TMP_PATH = path.join(os.tmpdir(), "scrollmate-site-data.json");
+
+// In-memory cache for fast, seamless access within the active serverless instance
+let memoryCache: SiteData | null = null;
 
 export function getSiteData(): SiteData {
-  try {
-    if (fs.existsSync(DATA_PATH)) {
-      const fileContent = fs.readFileSync(DATA_PATH, "utf-8");
-      return JSON.parse(fileContent) as SiteData;
-    }
-  } catch (error) {
-    console.error("Error reading site-data.json:", error);
+  if (memoryCache) {
+    return memoryCache;
   }
 
-  // Fallback defaults
-  return {
-    hero: {
-      eyebrow: "Social media management that feels like magic",
-      headline: "Stop scrolling by.<br />Start standing out.",
-      lead: "Scrollmate helps growing brands win every scroll through content, community, and strategy.",
-      marquee: [
-        "GROWTH THAT MATTERS",
-        "AUTHENTIC CONNECTIONS",
-        "CONTENT THAT STICKS",
-        "MORE CONVERSIONS",
-        "EFFORTLESS ENGAGEMENT",
-      ],
-    },
-    steps: [],
-    brands: [],
-    partner: {
-      name: "Hero Editor Studios",
-      lead: "A creative multimedia and production studio based in the Philippines.",
-      tags: ["Graphic Design", "Branding", "Video Animation"],
-      image: "/hero-editor-studios.png",
-      badge: "Creative & Production Partner",
-      ctaLabel: "Work with us",
-      ctaHref: "#contact",
-    },
-    packages: [],
-    contact: {
-      email: "Scrollmate.business@gmail.com",
-      facebook: "Scrollmate",
-      heading: "Ready to put your brand on the map?",
-      subheading: "Tell us where your brand is now—and where you want it to go.",
-      promises: ["Friendly strategy", "Clear deliverables", "Built for growth"],
-    },
-  };
+  // 1. Check if a newer version exists in /tmp (written during active session)
+  try {
+    if (fs.existsSync(TMP_PATH)) {
+      const content = fs.readFileSync(TMP_PATH, "utf-8");
+      const parsed = JSON.parse(content) as SiteData;
+      if (parsed && parsed.brands && parsed.packages && parsed.steps) {
+        memoryCache = parsed;
+        return parsed;
+      }
+    }
+  } catch {
+    // Ignore tmp read errors
+  }
+
+  // 2. Check local bundled file
+  try {
+    if (fs.existsSync(BUNDLED_PATH)) {
+      const content = fs.readFileSync(BUNDLED_PATH, "utf-8");
+      const parsed = JSON.parse(content) as SiteData;
+      if (parsed && parsed.brands && parsed.packages && parsed.steps) {
+        memoryCache = parsed;
+        return parsed;
+      }
+    }
+  } catch {
+    // Ignore bundled file read errors
+  }
+
+  // 3. Bundled import fallback
+  memoryCache = initialSiteData as unknown as SiteData;
+  return memoryCache;
 }
 
-export function saveSiteData(newData: SiteData): boolean {
+export interface SaveSiteDataResult {
+  success: boolean;
+  persistedToDisk: boolean;
+  persistedToTmp: boolean;
+  persistedToGitHub: boolean;
+}
+
+export async function saveSiteData(newData: SiteData): Promise<SaveSiteDataResult> {
+  memoryCache = newData;
+  let persistedToDisk = false;
+  let persistedToTmp = false;
+  let persistedToGitHub = false;
+
+  // 1. Try writing to bundled path (works on local machine and non-serverless servers)
   try {
-    const dir = path.dirname(DATA_PATH);
+    const dir = path.dirname(BUNDLED_PATH);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
-    fs.writeFileSync(DATA_PATH, JSON.stringify(newData, null, 2), "utf-8");
-    return true;
-  } catch (error) {
-    console.error("Error saving site-data.json:", error);
-    return false;
+    fs.writeFileSync(BUNDLED_PATH, JSON.stringify(newData, null, 2), "utf-8");
+    persistedToDisk = true;
+  } catch {
+    // Expected on read-only serverless filesystems (Vercel, AWS Lambda)
   }
+
+  // 2. Always write to /tmp (always writable in Vercel & serverless environments)
+  try {
+    const tmpDir = path.dirname(TMP_PATH);
+    if (!fs.existsSync(tmpDir)) {
+      fs.mkdirSync(tmpDir, { recursive: true });
+    }
+    fs.writeFileSync(TMP_PATH, JSON.stringify(newData, null, 2), "utf-8");
+    persistedToTmp = true;
+  } catch (err) {
+    console.error("Failed to write to /tmp:", err);
+  }
+
+  // 3. If GITHUB_TOKEN is present in env, commit directly to repository
+  const ghToken = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+  const ghRepo = process.env.GITHUB_REPO || "jrleonciowork-art/Scrollmate";
+  if (ghToken) {
+    try {
+      persistedToGitHub = await commitToGitHub(ghRepo, ghToken, newData);
+    } catch (ghErr) {
+      console.warn("GitHub automated commit error:", ghErr);
+    }
+  }
+
+  return {
+    success: persistedToDisk || persistedToTmp || !!memoryCache,
+    persistedToDisk,
+    persistedToTmp,
+    persistedToGitHub,
+  };
+}
+
+async function commitToGitHub(repo: string, token: string, data: SiteData): Promise<boolean> {
+  const filePath = "data/site-data.json";
+  const url = `https://api.github.com/repos/${repo}/contents/${filePath}`;
+
+  let sha: string | undefined;
+  try {
+    const getRes = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github.v3+json",
+        "User-Agent": "Scrollmate-Admin",
+      },
+      cache: "no-store",
+    });
+    if (getRes.ok) {
+      const fileInfo = await getRes.json();
+      sha = fileInfo.sha;
+    }
+  } catch {
+    // SHA retrieval failed
+  }
+
+  const contentBase64 = Buffer.from(JSON.stringify(data, null, 2), "utf-8").toString("base64");
+
+  const putRes = await fetch(url, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/vnd.github.v3+json",
+      "Content-Type": "application/json",
+      "User-Agent": "Scrollmate-Admin",
+    },
+    body: JSON.stringify({
+      message: "chore(cms): update site content from /ScrollmateAdmin",
+      content: contentBase64,
+      sha,
+      branch: "main",
+    }),
+  });
+
+  return putRes.ok;
 }

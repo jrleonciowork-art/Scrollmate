@@ -138,7 +138,7 @@ export default function Home() {
   const [siteContent, setSiteContent] = useState(initialSiteData);
 
   useEffect(() => {
-    fetch("/api/admin/content")
+    fetch("/api/admin/content", { cache: "no-store" })
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error("Failed to fetch");
@@ -148,7 +148,19 @@ export default function Home() {
           setSiteContent(json);
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        try {
+          const cached = localStorage.getItem("scrollmate_site_data_cache");
+          if (cached) {
+            const parsed = JSON.parse(cached);
+            if (parsed && parsed.brands && parsed.packages && parsed.steps) {
+              setSiteContent(parsed);
+            }
+          }
+        } catch {
+          // ignore
+        }
+      });
   }, []);
 
   const brands = siteContent.brands;

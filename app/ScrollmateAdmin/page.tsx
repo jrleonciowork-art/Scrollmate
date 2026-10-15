@@ -118,7 +118,16 @@ export default function ScrollmateAdminPage() {
       const json = await res.json();
 
       if (res.ok && json.success) {
-        showToast("Changes published live successfully!");
+        try {
+          localStorage.setItem("scrollmate_site_data_cache", JSON.stringify(data));
+        } catch {
+          // ignore
+        }
+        if (json.persistedToGitHub) {
+          showToast("Synced to GitHub repository & published live!");
+        } else {
+          showToast("Changes published live successfully!");
+        }
       } else {
         alert("Failed to save changes: " + (json.error || "Unknown error"));
       }
