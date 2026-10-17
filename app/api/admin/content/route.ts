@@ -10,7 +10,13 @@ const SESSION_VALUE = "scrollmate_auth_token_verified_2026";
 
 export async function GET() {
   const data = getSiteData();
-  return NextResponse.json(data);
+  return NextResponse.json(data, {
+    headers: {
+      "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+      Pragma: "no-cache",
+      Expires: "0",
+    },
+  });
 }
 
 export async function POST(request: Request) {
@@ -25,7 +31,10 @@ export async function POST(request: Request) {
       );
     }
 
-    const body: SiteData = await request.json();
+    const payload = await request.json();
+    const { githubToken, ...body } = payload;
+    const tokenHeader = request.headers.get("x-github-token") || undefined;
+    const effectiveToken = tokenHeader || (typeof githubToken === "string" ? githubToken : undefined);
 
     if (!body || !body.brands || !body.packages || !body.steps) {
       return NextResponse.json(
@@ -34,7 +43,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const result = await saveSiteData(body);
+    const result = await saveSiteData(body as SiteData, effectiveToken);
 
     if (!result.success) {
       return NextResponse.json(

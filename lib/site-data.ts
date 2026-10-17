@@ -75,6 +75,7 @@ export interface SiteData {
   partner: PartnerData;
   packages: PackageData[];
   contact: ContactData;
+  updatedAt?: number;
 }
 
 const BUNDLED_PATH = path.join(process.cwd(), "data", "site-data.json");
@@ -84,9 +85,8 @@ const TMP_PATH = path.join(os.tmpdir(), "scrollmate-site-data.json");
 let memoryCache: SiteData | null = null;
 
 export function getSiteData(): SiteData {
-  if (memoryCache) {
-    return memoryCache;
-  }
+  let bestData: SiteData | null = memoryCache;
+  let bestTime = bestData?.updatedAt || 0;
 
   // 1. Check if a newer version exists in /tmp (written during active session)
   try {
@@ -94,8 +94,11 @@ export function getSiteData(): SiteData {
       const content = fs.readFileSync(TMP_PATH, "utf-8");
       const parsed = JSON.parse(content) as SiteData;
       if (parsed && parsed.brands && parsed.packages && parsed.steps) {
-        memoryCache = parsed;
-        return parsed;
+        const tmpTime = parsed.updatedAt || 0;
+        if (!bestData || tmpTime >= bestTime) {
+          bestData = parsed;
+          bestTime = tmpTime;
+        }
       }
     }
   } catch {
@@ -108,12 +111,20 @@ export function getSiteData(): SiteData {
       const content = fs.readFileSync(BUNDLED_PATH, "utf-8");
       const parsed = JSON.parse(content) as SiteData;
       if (parsed && parsed.brands && parsed.packages && parsed.steps) {
-        memoryCache = parsed;
-        return parsed;
+        const bundledTime = parsed.updatedAt || 0;
+        if (!bestData || bundledTime > bestTime) {
+          bestData = parsed;
+          bestTime = bundledTime;
+        }
       }
     }
   } catch {
     // Ignore bundled file read errors
+  }
+
+  if (bestData) {
+    memoryCache = bestData;
+    return bestData;
   }
 
   // 3. Bundled import fallback
@@ -128,8 +139,14 @@ export interface SaveSiteDataResult {
   persistedToGitHub: boolean;
 }
 
-export async function saveSiteData(newData: SiteData): Promise<SaveSiteDataResult> {
+export async function saveSiteData(
+  newData: SiteData,
+  overrideGhToken?: string
+): Promise<SaveSiteDataResult> {
+  // Always guarantee an updated timestamp so client and server can reconcile
+  newData.updatedAt = Date.now();
   memoryCache = newData;
+
   let persistedToDisk = false;
   let persistedToTmp = false;
   let persistedToGitHub = false;
@@ -158,8 +175,8 @@ export async function saveSiteData(newData: SiteData): Promise<SaveSiteDataResul
     console.error("Failed to write to /tmp:", err);
   }
 
-  // 3. If GITHUB_TOKEN is present in env, commit directly to repository
-  const ghToken = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+  // 3. Commit to GitHub repository if token is provided
+  const ghToken = overrideGhToken || process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
   const ghRepo = process.env.GITHUB_REPO || "jrleonciowork-art/Scrollmate";
   if (ghToken) {
     try {

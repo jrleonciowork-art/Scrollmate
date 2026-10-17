@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import LoadingScreen from "./components/LoadingScreen";
 import initialSiteData from "@/data/site-data.json";
+import type { SiteData } from "@/lib/site-data";
 
 
 function IconArrowUpRight({ className = "" }: { className?: string }) {
@@ -135,32 +136,65 @@ export default function Home() {
   const systemTrackRef = useRef<HTMLElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [siteContent, setSiteContent] = useState(initialSiteData);
+  const [siteContent, setSiteContent] = useState<SiteData>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const cachedStr = localStorage.getItem("scrollmate_site_data_cache");
+        if (cachedStr) {
+          const cached = JSON.parse(cachedStr) as SiteData;
+          if (cached && cached.brands && cached.packages && cached.steps) {
+            const bundledTime = (initialSiteData as unknown as SiteData).updatedAt || 0;
+            const cachedTime = cached.updatedAt || 0;
+            if (cachedTime >= bundledTime) {
+              return cached;
+            }
+          }
+        }
+      } catch {
+        // ignore
+      }
+    }
+    return initialSiteData as unknown as SiteData;
+  });
 
   useEffect(() => {
+    // Fetch server content and only accept if it is newer or equal
     fetch("/api/admin/content", { cache: "no-store" })
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error("Failed to fetch");
       })
-      .then((json) => {
-        if (json && json.brands && json.packages && json.steps) {
-          setSiteContent(json);
+      .then((serverJson) => {
+        if (!serverJson || !serverJson.brands || !serverJson.packages || !serverJson.steps) {
+          return;
         }
-      })
-      .catch(() => {
+
+        let localCacheTime = 0;
         try {
-          const cached = localStorage.getItem("scrollmate_site_data_cache");
-          if (cached) {
-            const parsed = JSON.parse(cached);
-            if (parsed && parsed.brands && parsed.packages && parsed.steps) {
-              setSiteContent(parsed);
-            }
+          const cachedStr = localStorage.getItem("scrollmate_site_data_cache");
+          if (cachedStr) {
+            const cached = JSON.parse(cachedStr);
+            localCacheTime = cached?.updatedAt || 0;
           }
         } catch {
           // ignore
         }
-      });
+
+        const serverTime = serverJson.updatedAt || 0;
+
+        // If client's saved data is newer than server response, preserve client data
+        if (localCacheTime > serverTime) {
+          return;
+        }
+
+        setSiteContent(serverJson);
+        try {
+          localStorage.setItem("scrollmate_site_data_cache", JSON.stringify(serverJson));
+        } catch {
+          // ignore
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const brands = siteContent.brands;

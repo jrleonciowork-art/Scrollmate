@@ -12,25 +12,86 @@ export default function ScrollmateAdminPage() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   // Content state
-  const [data, setData] = useState<SiteData | null>(null);
+  const [data, setData] = useState<SiteData | null>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const cached = localStorage.getItem("scrollmate_site_data_cache");
+        if (cached) {
+          const parsed = JSON.parse(cached) as SiteData;
+          if (parsed && parsed.brands) return parsed;
+        }
+      } catch {
+        // ignore
+      }
+    }
+    return null;
+  });
   const [activeTab, setActiveTab] = useState<"brands" | "packages" | "system" | "partner" | "general">("brands");
   const [isSaving, setIsSaving] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [githubPat, setGithubPat] = useState<string>(() => {
+    if (typeof window === "undefined") return "";
+    try {
+      return localStorage.getItem("scrollmate_github_pat") || "";
+    } catch {
+      return "";
+    }
+  });
 
   // Helper for brand tag input
   const [brandTagInputs, setBrandTagInputs] = useState<{ [key: number]: string }>({});
 
-  const loadContent = useCallback(async () => {
+  const syncWithLatestData = useCallback((serverJson: SiteData | null) => {
+    let localData: SiteData | null = null;
     try {
-      const res = await fetch("/api/admin/content");
-      if (res.ok) {
-        const json = await res.json();
-        setData(json);
+      const cached = localStorage.getItem("scrollmate_site_data_cache");
+      if (cached) {
+        localData = JSON.parse(cached) as SiteData;
       }
-    } catch (err) {
-      console.error("Failed to load content:", err);
+    } catch {
+      // ignore
+    }
+
+    const localTime = localData?.updatedAt || 0;
+    const serverTime = serverJson?.updatedAt || 0;
+
+    // If local data is newer than server response, keep local data!
+    if (localData && localData.brands && localTime > serverTime) {
+      setData(localData);
+      // Auto-rehydrate active serverless worker in the background
+      fetch("/api/admin/content", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(localData),
+      }).catch(() => {});
+      return;
+    }
+
+    if (serverJson && serverJson.brands) {
+      setData(serverJson);
+      try {
+        localStorage.setItem("scrollmate_site_data_cache", JSON.stringify(serverJson));
+      } catch {
+        // ignore
+      }
+      return;
+    }
+
+    if (localData && localData.brands) {
+      setData(localData);
     }
   }, []);
+
+  const loadContent = useCallback(async () => {
+    try {
+      const res = await fetch("/api/admin/content", { cache: "no-store" });
+      const json = res.ok ? await res.json() : null;
+      syncWithLatestData(json);
+    } catch (err) {
+      console.error("Failed to load content:", err);
+      syncWithLatestData(null);
+    }
+  }, [syncWithLatestData]);
 
   // Check auth on mount
   useEffect(() => {
@@ -41,12 +102,14 @@ export default function ScrollmateAdminPage() {
         if (!isMounted) return;
         if (res.ok) {
           setIsAuthenticated(true);
-          fetch("/api/admin/content")
+          fetch("/api/admin/content", { cache: "no-store" })
             .then((r) => (r.ok ? r.json() : null))
             .then((json) => {
-              if (isMounted && json) setData(json);
+              if (isMounted) syncWithLatestData(json);
             })
-            .catch(() => {});
+            .catch(() => {
+              if (isMounted) syncWithLatestData(null);
+            });
         } else {
           setIsAuthenticated(false);
         }
@@ -58,7 +121,7 @@ export default function ScrollmateAdminPage() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [syncWithLatestData]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -108,25 +171,36 @@ export default function ScrollmateAdminPage() {
     if (!data) return;
     setIsSaving(true);
 
+    const payload: SiteData = {
+      ...data,
+      updatedAt: Date.now(),
+    };
+    setData(payload);
+
     try {
+      localStorage.setItem("scrollmate_site_data_cache", JSON.stringify(payload));
+    } catch {
+      // ignore
+    }
+
+    try {
+      const tokenHeader = githubPat.trim() || undefined;
       const res = await fetch("/api/admin/content", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+          ...(tokenHeader ? { "x-github-token": tokenHeader } : {}),
+        },
+        body: JSON.stringify(payload),
       });
 
       const json = await res.json();
 
       if (res.ok && json.success) {
-        try {
-          localStorage.setItem("scrollmate_site_data_cache", JSON.stringify(data));
-        } catch {
-          // ignore
-        }
         if (json.persistedToGitHub) {
           showToast("Synced to GitHub repository & published live!");
         } else {
-          showToast("Changes published live successfully!");
+          showToast("Changes saved & published live successfully!");
         }
       } else {
         alert("Failed to save changes: " + (json.error || "Unknown error"));
@@ -1050,6 +1124,38 @@ export default function ScrollmateAdminPage() {
                     })
                   }
                 />
+              </div>
+            </div>
+
+            <div className="admin-section-box" style={{ marginTop: "24px", borderColor: "rgba(168, 85, 247, 0.45)" }}>
+              <h3 className="admin-box-title" style={{ color: "#d8b4fe" }}>
+                <span>✦</span>
+                <span>GitHub Cloud Deployment Sync (Optional)</span>
+              </h3>
+              <p style={{ color: "#cbd5e1", fontSize: "13.5px", lineHeight: "1.6", margin: "0 0 16px" }}>
+                Want changes to automatically deploy permanently to Vercel for every visitor without touching code? Enter your GitHub Personal Access Token (PAT) with <code>repo</code> write permission. Whenever you click <strong>Save &amp; Publish Live</strong>, it will automatically push a commit to <code>data/site-data.json</code> on <code>main</code>!
+              </p>
+              <div className="admin-input-group">
+                <span className="admin-input-label">GitHub Personal Access Token (PAT)</span>
+                <input
+                  type="password"
+                  className="admin-input"
+                  placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
+                  value={githubPat}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setGithubPat(val);
+                    try {
+                      if (val) localStorage.setItem("scrollmate_github_pat", val);
+                      else localStorage.removeItem("scrollmate_github_pat");
+                    } catch {
+                      // ignore
+                    }
+                  }}
+                />
+                <small style={{ color: githubPat ? "#4ade80" : "#94a3b8", display: "block", marginTop: "8px", fontSize: "12px", fontWeight: 700 }}>
+                  {githubPat ? "✓ GitHub Token active. Edits will commit to GitHub & trigger automatic Vercel deployment." : "No token set. Edits are saved to browser storage & live server memory."}
+                </small>
               </div>
             </div>
           </section>
